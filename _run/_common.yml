@@ -2,6 +2,8 @@ conf_desc: &conf_desc
   conf_desc:
     app_port:
     pg_port:
+    api_port:
+    api_net:
 
 vars_desc: &vars_desc
   vars_desc:
@@ -22,4 +24,3 @@ test:
   <<: *vars_desc
   compose_files:
   - main
-

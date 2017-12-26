@@ -1,0 +1,11 @@
+.table-container {
+  padding: 14px;
+}
+.pagination-button {
+  margin: 15px;
+  color: #fff;
+  background-color: #47b
+}
+.pagination-button:hover {
+  background-color: #58c
+}

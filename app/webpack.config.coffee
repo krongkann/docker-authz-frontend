@@ -85,7 +85,6 @@ config =
 
 
 unless process.env.NODE_ENV == 'production'
-  console.log "process.env.NODE_ENV========",process.env.NODE_ENV
   config.entry.login = [
     'babel-polyfill'
     'react-hot-loader/patch'

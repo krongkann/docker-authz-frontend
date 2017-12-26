@@ -1,0 +1,23 @@
+
+
+.search {
+  padding: 10px;
+  margin: auto;
+  width: 50%;
+}
+
+.label {
+  display: initial;
+  size: 30px;
+
+}
+
+.col-xs-6 {
+  font-size: large;
+}
+.log-out{
+  display: initial;
+  padding-left: 80;
+  padding-left: 210px;
+  margin-left: 10px;
+}

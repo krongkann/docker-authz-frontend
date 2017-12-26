@@ -10,10 +10,9 @@ dev:
   extend: {from: _common, group: dev}
   <<: *self
   conf:
-    nginx_port: 8088
-    nginx_s_port: 8080
-    pg_port: 5432
-    app_port: 2222
+    app_port: 80
+    ql_port: 88
+    api_port: 89
     api_net: dev
   vars:
     <<: *self_vars
@@ -22,7 +21,8 @@ test:
   extend: {from: _common, group: test}
   <<: *self
   conf:
-    pg_port: 5444
+    api_port: 80
+
   vars:
     <<: *self_vars
 

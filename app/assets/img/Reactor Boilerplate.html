@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!-- saved from url=(0020)http://0.0.0.0/about -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Reactor Boilerplate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="./Reactor Boilerplate_files/jquery.min.js"></script>
+    <link rel="stylesheet" href="./Reactor Boilerplate_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Reactor Boilerplate_files/font-awesome.min.css">
+  <style type="text/css">.react-bs-table .react-bs-container-header .sort-column,td.react-bs-table-expand-cell{cursor:pointer}.react-bs-table-container .react-bs-table-search-form{margin-bottom:0}.react-bs-table-bordered{border:1px solid #ddd;border-radius:5px}.react-bs-table table{margin-bottom:0;table-layout:fixed}.react-bs-table table td,.react-bs-table table th{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.react-bs-table-pagination{margin-top:10px}.react-bs-table-tool-bar{margin-bottom:5px}.react-bs-container-footer,.react-bs-container-header{overflow:hidden;width:100%}.react-bs-container-body{overflow:auto;width:100%}.react-bootstrap-table-page-btns-ul{float:right;margin-top:0}.react-bs-table .table-bordered{border:0;outline:0!important}.react-bs-table .table-bordered>thead>tr>td,.react-bs-table .table-bordered>thead>tr>th{border-bottom-width:2px}.react-bs-table .table-bordered>tbody>tr>td{outline:0!important}.react-bs-table .table-bordered>tbody>tr>td.default-focus-cell{outline:#6495ed solid 3px!important;outline-offset:-1px}.react-bs-table .table-bordered>tfoot>tr>td,.react-bs-table .table-bordered>tfoot>tr>th{border-top-width:2px;border-bottom-width:0}.react-bs-table .table-bordered>tbody>tr>td:first-child,.react-bs-table .table-bordered>tbody>tr>th:first-child,.react-bs-table .table-bordered>tfoot>tr>td:first-child,.react-bs-table .table-bordered>tfoot>tr>th:first-child,.react-bs-table .table-bordered>thead>tr>td:first-child,.react-bs-table .table-bordered>thead>tr>th:first-child{border-left-width:0}.react-bs-table .table-bordered>tbody>tr>td:last-child,.react-bs-table .table-bordered>tbody>tr>th:last-child,.react-bs-table .table-bordered>tfoot>tr>td:last-child,.react-bs-table .table-bordered>tfoot>tr>th:last-child,.react-bs-table .table-bordered>thead>tr>td:last-child,.react-bs-table .table-bordered>thead>tr>th:last-child{border-right-width:0}.react-bs-table .table-bordered>thead>tr:first-child>td,.react-bs-table .table-bordered>thead>tr:first-child>th{border-top-width:0}.react-bs-table .table-bordered>tfoot>tr:last-child>td,.react-bs-table .table-bordered>tfoot>tr:last-child>th{border-bottom-width:0}.react-bs-table .react-bs-container-footer>table>thead>tr>th,.react-bs-table .react-bs-container-header>table>thead>tr>th{vertical-align:middle}.react-bs-table .react-bs-container-footer>table>thead>tr>th .filter,.react-bs-table .react-bs-container-header>table>thead>tr>th .filter{font-weight:400}.react-bs-table .react-bs-container-header>table>thead>tr>th .filter::-webkit-input-placeholder,.react-bs-table .react-bs-container-header>table>thead>tr>th .number-filter-input::-webkit-input-placeholder,.react-bs-table .react-bs-container-header>table>thead>tr>th .select-filter option[value=''],.react-bs-table .react-bs-container-header>table>thead>tr>th .select-filter.placeholder-selected{color:#d3d3d3;font-style:italic}.react-bs-table .react-bs-container-footer>table>thead>tr>th .filter::-webkit-input-placeholder,.react-bs-table .react-bs-container-footer>table>thead>tr>th .number-filter-input::-webkit-input-placeholder,.react-bs-table .react-bs-container-footer>table>thead>tr>th .select-filter option[value=''],.react-bs-table .react-bs-container-footer>table>thead>tr>th .select-filter.placeholder-selected{color:#d3d3d3;font-style:italic}.react-bs-table .react-bs-container-footer>table>thead>tr>th .select-filter.placeholder-selected option:not([value='']),.react-bs-table .react-bs-container-header>table>thead>tr>th .select-filter.placeholder-selected option:not([value='']){color:initial;font-style:initial}.react-bs-table .react-bs-container-footer>table>thead>tr>th .date-filter,.react-bs-table .react-bs-container-footer>table>thead>tr>th .number-filter,.react-bs-table .react-bs-container-header>table>thead>tr>th .date-filter,.react-bs-table .react-bs-container-header>table>thead>tr>th .number-filter{display:flex}.react-bs-table .react-bs-container-footer>table>thead>tr>th .date-filter-input,.react-bs-table .react-bs-container-footer>table>thead>tr>th .number-filter-input,.react-bs-table .react-bs-container-header>table>thead>tr>th .date-filter-input,.react-bs-table .react-bs-container-header>table>thead>tr>th .number-filter-input{margin-left:5px;float:left;width:calc(100% - 67px - 5px)}.react-bs-table .react-bs-container-footer>table>thead>tr>th .date-filter-comparator,.react-bs-table .react-bs-container-footer>table>thead>tr>th .number-filter-comparator,.react-bs-table .react-bs-container-header>table>thead>tr>th .date-filter-comparator,.react-bs-table .react-bs-container-header>table>thead>tr>th .number-filter-comparator{width:67px;float:left}.react-bs-container .textarea-save-btn{position:absolute;z-index:100;right:0;top:-21px}.react-bs-table-no-data{text-align:center}.ReactModal__Overlay{-webkit-perspective:600;perspective:600;opacity:0;overflow-x:hidden;overflow-y:auto;background-color:rgba(0,0,0,.5);z-index:101}.ReactModal__Overlay--after-open{opacity:1;transition:opacity 150ms ease-out}.ReactModal__Content{-webkit-transform:scale(.5) rotateX(-30deg);transform:scale(.5) rotateX(-30deg)}.ReactModal__Content--after-open{-webkit-transform:scale(1) rotateX(0);transform:scale(1) rotateX(0);transition:all 150ms ease-in}.ReactModal__Overlay--before-close{opacity:0}.ReactModal__Content--before-close{-webkit-transform:scale(.5) rotateX(30deg);transform:scale(.5) rotateX(30deg);transition:all 150ms ease-in}.ReactModal__Content.modal-dialog{border:none;background-color:transparent}.animated{animation-fill-mode:both}.animated.bounceIn,.animated.bounceOut{animation-duration:.75s}.animated.shake{animation-duration:.3s}@keyframes shake{from,to{transform:translate3d(0,0,0)}10%,50%,90%{transform:translate3d(-10px,0,0)}30%,70%{transform:translate3d(10px,0,0)}}.shake{animation-name:shake}@keyframes bounceIn{20%,40%,60%,80%,from,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:scale3d(.3,.3,.3)}20%{transform:scale3d(1.1,1.1,1.1)}40%{transform:scale3d(.9,.9,.9)}60%{opacity:1;transform:scale3d(1.03,1.03,1.03)}80%{transform:scale3d(.97,.97,.97)}to{opacity:1;transform:scale3d(1,1,1)}}.bounceIn{animation-name:bounceIn}@keyframes bounceOut{20%{transform:scale3d(.9,.9,.9)}50%,55%{opacity:1;transform:scale3d(1.1,1.1,1.1)}to{opacity:0;transform:scale3d(.3,.3,.3)}}.bounceOut{animation-name:bounceOut}</style><style type="text/css">.header-bar-button {
+  color: #FFF;
+  font-weight: bolder;
+}
+.header-bar {
+  padding: 15px;
+}</style><style type="text/css">.table-container {
+  padding: 14px;
+}
+.pagination-button {
+  margin: 15px;
+  color: #fff;
+  background-color: #47b
+}
+.pagination-button:hover {
+  background-color: #58c
+}</style><style type="text/css">.containerhh {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: stretch;
+  justify-content: space-between;
+  flex: 1;
+}
+.containervv {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+}
+.item {
+  flex: 1;
+}</style><style type="text/css">.search {
+  padding: 15px;
+}
+
+.label{
+
+}
+.log-out{
+  display: initial;
+  padding-left: 80;
+  padding-left: 210px;
+  margin-left: 10px;
+}</style><style type="text/css">.x-button-top {
+
+  padding:10px;
+}</style><style type="text/css">.react-confirm-alert-blur {
+  filter: url(#gaussian-blur);
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+}
+
+.react-confirm-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(255, 255, 255, 0.9);
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: center;
+  -ms-align-items: center;
+  align-items: center;
+  opacity: 0;
+  -webkit-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+  -moz-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+  -o-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+  animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+}
+
+.react-confirm-alert {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 400px;
+  padding: 30px;
+  text-align: left;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+  color: #666;
+}
+
+.react-confirm-alert-svg{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.react-confirm-alert > h1 {
+  margin-top: 0;
+}
+
+.react-confirm-alert > h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.react-confirm-alert-button-group {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.react-confirm-alert-button-group > button {
+  outline: none;
+  background: #333;
+  border: none;
+  display: inline-block;
+  padding: 6px 18px;
+  color: #eee;
+  margin-right: 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@-webkit-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+</style><style type="text/css">.containerhh {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: stretch;
+  justify-content: space-between;
+  flex: 1;
+}
+.containervv {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: flex-start;
+  justify-content: flex-start;
+  padding:10px;
+  flex: 1;
+}
+.item {
+  flex: 1;
+}</style></head>
+  <body>
+    <div id="render-app"><div data-reactroot=""><div><div class="search"><div class="container"><div class="row"><div class="col-md-4 col-xs-6"><img src="./Reactor Boilerplate_files/logo.png" class="img-responsive"></div></div><div class="col-md-4 col-xs-6"><h4>ABOSS Docker Authorization</h4><!-- react-text: 10 --> <!-- /react-text --></div></div><form class="form-horizontal"><div class="form-group"><label for="formHorizontalUsername" class="col-sm-2 control-label">Username</label><div class="col-sm-10"><input type="text" placeholder="Username" id="formHorizontalUsername" class="form-control"></div></div><div class="form-group"><label for="formHorizontalPassword" class="col-sm-2 control-label">Password</label><div class="col-sm-10"><input type="password" placeholder="Password" id="formHorizontalPassword" class="form-control"></div></div><label class="col-sm-5 control-label" style="color: red;"></label><div class="form-group"><div class="col-sm-10 col-sm-offset-2"><div class="checkbox"><label title=""><input type="checkbox" value="on"><!-- react-text: 26 -->Remember me<!-- /react-text --></label></div></div></div><div class="form-group"><div class="col-sm-10 col-sm-offset-2"><button type="submit" class="btn btn-default">Sign in</button></div></div></form></div></div></div></div>
+    <script src="./Reactor Boilerplate_files/bundle.js"></script>
+  
+
+
+</body></html>

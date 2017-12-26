@@ -1,0 +1,10 @@
+{
+  "presets": [
+    [ "env",    {"targets": {"node": "current"}, "debug": true, "module": false}],
+    "react",
+    "stage-2"
+  ], 
+  "plugins": [ 
+    "react-hot-loader/babel"
+  ]
+}
