@@ -1,0 +1,4 @@
+.dockerfile*
+.docker-file*
+.compose*
+.tasks*

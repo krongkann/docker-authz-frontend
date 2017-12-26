@@ -1,0 +1,5 @@
+project: aboss-docker-authz-frontend
+sources:
+  app:
+    - entrypoint_app.rb:/entrypoint
+    - app:/app

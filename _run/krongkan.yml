@@ -1,0 +1,28 @@
+_self: &self 
+  source_dir: /home/krongkan/Works
+
+_self_vars: &self_vars
+  PROD_USER:
+    NAME: krongkan 
+    UID: '1000'
+
+dev:
+  extend: {from: _common, group: dev}
+  <<: *self
+  conf:
+    nginx_port: 8088
+    nginx_s_port: 8080
+    pg_port: 5432
+    app_port: 2222
+    api_net: dev
+  vars:
+    <<: *self_vars
+
+test:
+  extend: {from: _common, group: test}
+  <<: *self
+  conf:
+    pg_port: 5444
+  vars:
+    <<: *self_vars
+
