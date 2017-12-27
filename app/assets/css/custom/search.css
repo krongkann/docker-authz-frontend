@@ -21,3 +21,10 @@
   padding-left: 210px;
   margin-left: 10px;
 }
+
+.nav{
+  color: darkgrey;
+}
+.nav:hover{
+  color: white;
+}
