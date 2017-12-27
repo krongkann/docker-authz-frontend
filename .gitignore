@@ -2,3 +2,4 @@
 .docker-file*
 .compose*
 .tasks*
+app/semantic/dist
