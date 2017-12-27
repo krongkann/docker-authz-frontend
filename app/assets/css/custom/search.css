@@ -28,3 +28,14 @@
 .nav:hover{
   color: white;
 }
+
+@keyframes back-to-docs {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(0.35em); }
+  100% { transform: translateY(0); }
+  }
+
+
+body > div,body > div > div,body > div > div > div.login-form {
+  height: 100%;
+}

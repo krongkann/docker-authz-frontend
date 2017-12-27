@@ -1,19 +1,7 @@
 import logo from "/app/assets/img/logo.png"
 import React,{Component} from 'react'
 import { render } from 'react-dom'
-import {
-  Form,
-  FormGroup,
-  Col,
-  FormControl,
-  Button,
-  ControlLabel,
-  Checkbox,
-  Grid,
-  Row,
-  Image
-
-  } from 'react-bootstrap'
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import '/app/assets/css/custom/search'
 class Login extends Component
   constructor:(props)->
@@ -21,65 +9,56 @@ class Login extends Component
     @state = {}
   render: ->
     me = @
-
+    msg = _.get me, 'props.msg.response' 
+    console.log msg == false
     isSubmitButtonDisable = !(@state.username and @state.password)
+    <div className='login-form'>
+      <Grid
+        textAlign='center'
+        style={{ height: '100%' }}
+        verticalAlign='middle'
+      >
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Image src={logo} />
 
- 
-    <div className='search'> 
-      <Grid>
-        <Row>
-          <Col xs={6} md={4}>
-            <Image src={logo}   responsive  />
-          </Col>
-        </Row>
-        <Col componentClass={ControlLabel}   className='search'  xs={6} md={4}>ABOSS Docker Authorizations</Col>
-      </Grid>
-
-      <Form horizontal onSubmit={(e) -> 
+          <Header as='h2' style={color: '#0596d5'} textAlign='center'>
+            {' '}Log-in to your account
+          </Header>
+          <Form size='large' onSubmit={(e) -> 
             e.preventDefault()
-            me.props.onSubmit me.state   } >
-        <FormGroup controlId="formHorizontalUsername" >
-          <Col componentClass={ControlLabel} sm={2}>
-            Username
-          </Col>
-          <Col sm={6}>
-            <FormControl  type="text" placeholder="Username"   onChange={(e)-> me.setState username: e.target.value} />
-          </Col>
-        </FormGroup>
+            me.props.onSubmit me.state   }>
+            <Segment stacked>
+              <Form.Input
+                fluid
+                icon='user'
+                iconPosition='left'
+                placeholder='Username'
+                onChange={(e)-> me.setState username: e.target.value} 
+              />
+              <Form.Input
+                fluid
+                icon='lock'
+                iconPosition='left'
+                placeholder='Password'
+                type='password'
+                onChange={(e)-> me.setState password: e.target.value}
+              />
 
-        <FormGroup controlId="formHorizontalPassword">
-          <Col componentClass={ControlLabel} sm={2}>
-            Password
-          </Col>
-          <Col sm={6}>
-            <FormControl type="password" placeholder="Password"  onChange={(e)-> me.setState password: e.target.value} />
-          </Col>
-        </FormGroup>
-        <Col componentClass={ControlLabel}style={color: 'red'} sm={5}>
-          {
-
-            if (_.get me, 'props.msg.response')  == false
-              "Login fail"
-          }
-          
-        </Col>
-
-        <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Checkbox  id="rememberbox" onChange={(e)-> 
-                  me.setState boxremember: rememberbox.checked
-                  console.log "ckec;" }> Remember me</Checkbox>
-          </Col>
-        </FormGroup>
-
-        <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Button type="submit" disabled={isSubmitButtonDisable} >
-              Sign in
-            </Button>
-          </Col>
-        </FormGroup>
-      </Form>
+              <Button color='blue' fluid size='large' disabled={isSubmitButtonDisable}  >Login</Button>
+            </Segment>
+          </Form>
+            {
+              if msg == false
+                <Message style={color: 'red'}>
+                  Login Fail  
+                </Message>
+              else
+                <Message>
+                  New to us? <a href='#'>Sign Up</a>
+                </Message>
+            }
+        </Grid.Column>
+      </Grid>
     </div>
 
 

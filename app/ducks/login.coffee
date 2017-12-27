@@ -23,7 +23,6 @@ export actions =
           type: TYPES.LOGINGIN
           payload: false
         
-        console.log "response=====",response
         dispatch
           type: TYPES.SUCCESS
           payload: 
