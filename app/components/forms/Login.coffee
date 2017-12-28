@@ -10,7 +10,6 @@ class Login extends Component
   render: ->
     me = @
     msg = _.get me, 'props.msg.response' 
-    console.log msg == false
     isSubmitButtonDisable = !(@state.username and @state.password)
     <div className='login-form'>
       <Grid

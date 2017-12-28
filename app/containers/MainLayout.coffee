@@ -5,8 +5,8 @@ import LogContainer                    from '/app/containers/LogContainer'
 import PermissionContainer             from '/app/containers/PermissionContainer'
 import ImageContainer                  from '/app/containers/ImageContainer'
 import { Input, Menu, Segment, Container } from 'semantic-ui-react'
-
 import { actions as pageActions }     from '/app/ducks/page'
+import { actions as logActions }      from '/app/ducks/log'
 import {
   BrowserRouter as Router,
   Route,
@@ -29,7 +29,7 @@ class  MainLayout extends Component
       <div>
         <Menu inverted >
           <Menu.Item name='permission' as={Link} to='/permission'  onClick={me.props.onClick} />
-          <Menu.Item name='log' as={Link} to='/log'  onClick={me.props.onClick}/>
+          <Menu.Item name='log' as={Link} to='/main'  onClick={me.props.onClick}/>
           <Menu.Item name='image' as={Link} to='/image' onClick={me.props.onClick} />
           <Menu.Menu position='right'>
             <Menu.Item>
@@ -39,7 +39,7 @@ class  MainLayout extends Component
           </Menu.Menu>
         </Menu>
         <Route exact path="/permission" component={PermissionContainer}/>
-        <Route exact path="/log" component={LogContainer}/>
+        <Route exact path="/main" component={LogContainer}/>
         <Route exact path="/image" component={ImageContainer}/>
         <Route exact path="/logout" component={SigninContainer}/>
       </div>
@@ -51,9 +51,11 @@ class  MainLayout extends Component
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch pageActions.doSelectPage(@name)
-
-mapStateToProps = ({page}) -> 
+    dispatch logActions.getLog()
+mapStateToProps = ({page, login}) -> 
+  console.log 'login', login,page
   pageSelect: _.get page, 'active'
+  user: login
 
 
 
