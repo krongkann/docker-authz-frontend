@@ -27,6 +27,7 @@ class  LogContainer extends Component
 
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->
+    dispatch logActions.searchLog(key)
   onPage:(e)->
     dispatch logActions.getfilterLog(e)
 

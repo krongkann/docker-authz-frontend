@@ -5,7 +5,7 @@ axios = require 'axios'
 
 DEFAULT_STATE = {}
 
-export ACTIONS = defineAction('LOG', ['LOAD_DATA', 'SUCCESS', 'FILTER_LOG', 'SELECTOR']) 
+export ACTIONS = defineAction('LOG', ['LOAD_DATA', 'SUCCESS', 'FILTER_LOG', 'SELECTOR', 'SEARCH']) 
 
 export actions = 
   getLog: (servername)=>
@@ -120,6 +120,21 @@ query{
             command : command.logsCommands
 
       catch e
+  searchLog:({startDate, endDate, servername, username, command})->
+    console.log command
+    (dispatch)=>
+      try
+        dispatch 
+          type: ACTIONS.SEARCH
+          plyload:
+            servername: servername
+            username: username
+            command: command
+            date:
+              startDate: startDate
+              endDate: endDate
+
+      catch e
 
 export default (state=DEFAULT_STATE, {type, payload})->
   switch type
@@ -129,6 +144,10 @@ export default (state=DEFAULT_STATE, {type, payload})->
     when ACTIONS.SELECTOR
       _.extend {}, state,
         selector: payload
+    when ACTIONS.SEARCH
+      _.extend {}, state,
+        data: payload
+
 
     else
       state

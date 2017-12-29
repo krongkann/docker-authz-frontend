@@ -2,6 +2,7 @@
 
 import React,{Component}   from 'react'
 import moment              from 'moment'
+import prettyMs            from 'pretty-ms'
 import { Dropdown, Label, Select, Grid, Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -12,34 +13,26 @@ class  OptionTable extends Component
     super(props)
     @state = 
       startDate: moment()
-  handleChange:(date) ->
-    console.log "fff",date
-    @setState
-      startDate: date
-  countryOptions=
-  [
-    { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-    { key: 'af1', value: 'af1', flag: 'af', text: 'KOkea' }
 
-]
+
   render:->
     me = @
+    time = moment(_.get me, 'state.startDate').utcOffset '+00:00'
+    console.log prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
+    console.log  time.format "YYYY-MM-DD HH:mm:ss"
     select = _.get me, 'props.select'
-   
+    stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }]
     <div className='option-table'> 
-
-
       <Grid columns='equal'>
-       
         <Grid.Row>
           <Grid.Column>
           {
             server = []
             _.each (_.get select, 'server'), (v,k) ->
-              server.push { text: v }
-            <Select placeholder='Server Name' 
-              onChange={(e,value)->  
-                me.setState servername: value.options[0].text}
+              server.push { text: v, key: k , value: v}
+            <Dropdown placeholder='Server Name' fluid multiple search selection
+              onChange={(e,{value})->  
+                me.setState servername: value}
                 options={server } />
           }
           </Grid.Column>
@@ -47,11 +40,11 @@ class  OptionTable extends Component
           {
             user = []
             _.each (_.get select, 'user'), (v,k) ->
-              user.push { text: v }
-            <Select placeholder='User Name' 
-              onChange={(e,value)->  
-                me.setState servername: value.options[0].text}
-                options={user } />
+              user.push { text: v , key: k ,value: v}
+            <Dropdown placeholder='User Name'  fluid multiple search selection
+              onChange={(e,{value})->  
+                me.setState username: value}
+                options={user} />
           }
      
           </Grid.Column>
@@ -59,14 +52,12 @@ class  OptionTable extends Component
            {
             command = []
             _.each (_.get select, 'command'), (v,k) ->
-              command.push { text: v }
-            <Select placeholder='Command' 
-              onChange={(e,value)->  
-                me.setState servername: value.options[0].text}
+              command.push { text: v ,key: k,value: v}
+            <Dropdown placeholder='Command' fluid multiple search selection
+              onChange={(e,{value})->  
+                me.setState command: value}
                 options={command } />
           }
-     
-          
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
@@ -75,7 +66,9 @@ class  OptionTable extends Component
               selected={@state.startDate}
               className='date-picker' 
               dateFormat="DD/MM/YYYY"
-              onChange={(date)->  me.setState startDate: date} />
+              onChange={(date)->  
+                time = moment(date).utcOffset '+00:00'
+                me.setState startDate: (prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago')} />
           </Grid.Column>
           <Grid.Column>
             <DatePicker placeholderText="To" className='date-picker' 
