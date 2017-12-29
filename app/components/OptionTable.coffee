@@ -5,11 +5,7 @@ import moment              from 'moment'
 import { Dropdown, Label, Select, Grid, Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-countryOptions=
-  [{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-    { key: 'af1', value: 'af1', flag: 'af', text: 'KOkea' }
 
-]
 
 class  OptionTable extends Component
   constructor: (props) ->
@@ -20,10 +16,16 @@ class  OptionTable extends Component
     console.log "fff",date
     @setState
       startDate: date
-    
+  countryOptions=
+  [
+    { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
+    { key: 'af1', value: 'af1', flag: 'af', text: 'KOkea' }
 
+]
   render:->
     me = @
+    select = _.get me, 'props.select'
+   
     <div className='option-table'> 
 
 
@@ -31,22 +33,40 @@ class  OptionTable extends Component
        
         <Grid.Row>
           <Grid.Column>
+          {
+            server = []
+            _.each (_.get select, 'server'), (v,k) ->
+              server.push { text: v }
             <Select placeholder='Server Name' 
               onChange={(e,value)->  
                 me.setState servername: value.options[0].text}
-                options={countryOptions} />
+                options={server } />
+          }
           </Grid.Column>
           <Grid.Column>
+          {
+            user = []
+            _.each (_.get select, 'user'), (v,k) ->
+              user.push { text: v }
             <Select placeholder='User Name' 
-              options={countryOptions}
-              onChange={(e,data)->  
-                me.setState username: data.options[0].text}  />
+              onChange={(e,value)->  
+                me.setState servername: value.options[0].text}
+                options={user } />
+          }
+     
           </Grid.Column>
           <Grid.Column>
+           {
+            command = []
+            _.each (_.get select, 'command'), (v,k) ->
+              command.push { text: v }
             <Select placeholder='Command' 
-              options={countryOptions}
-              onChange={(e, data)->  
-                me.setState command: data.options[1].text}  />
+              onChange={(e,value)->  
+                me.setState servername: value.options[0].text}
+                options={command } />
+          }
+     
+          
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>

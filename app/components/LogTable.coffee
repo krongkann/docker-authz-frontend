@@ -12,6 +12,8 @@ class  LogTable extends Component
   render:->
     me = @
     data = _.get me, 'props.data'
+    w = window.innerWidth
+    cursor = ""
     <div className='table'>
       <Table   celled > 
         <Table.Header>
@@ -28,36 +30,39 @@ class  LogTable extends Component
           <Table.Body>
         {
           table= []
-          _.each  data, (v,k)->
-
-           
-            data = _.extend {},
-                    servername: _.get v, 'node.servername'
-                    username:  _.get v, 'node.username'
-                    allow:  _.get v, 'node.allow'
-                    command:  _.get v, 'node.command'
-                    time: _.get v, 'node.createdAt'
-            table.push( <DataTable key={k} data={data}/> )
+          if data
+            data[0..1].map (v,k)->
+              cursor = v.cursor
+              table.push( <DataTable key={k} data={v.node} cursor= {v.cursor}/> )
           table
         }
         </Table.Body>
         <Table.Footer>
-        <Table.Row>
-          <Table.HeaderCell colSpan='3'>
-            <Menu floated='right' pagination>
-              <Menu.Item as='a' icon>
-                <Icon name='left chevron' />
-                {" "}
-                  Back
-              </Menu.Item>
-              <Menu.Item as='a' icon>
-                Next
-                <Icon name='right chevron' />
-              </Menu.Item>
-            </Menu>
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colSpan='12 '>
+              <Menu floated='right'   pagination>
+                <Menu.Item as='a' onClick={()-> 
+                      me.setState 
+                        pagegination: 'back'
+                        cursor: cursor
+                      me.props.onPage(me.state)
+                      } icon>
+                  <Icon name='left chevron' />
+                  {" "}
+                    Back
+                </Menu.Item>
+                <Menu.Item as='a' onClick={()-> 
+                          me.setState 
+                            pagegination: 'next'
+                            cursor: cursor
+                          me.props.onPage(me.state)} icon>
+                  Next
+                  <Icon name='right chevron' />
+                </Menu.Item>
+              </Menu>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
       </Table>
     </div>
 

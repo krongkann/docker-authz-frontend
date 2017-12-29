@@ -3,6 +3,7 @@ import { connect }                     from 'react-redux'
 import { ProgressBar }                 from 'react-bootstrap'
 import LogTable                        from '/app/components/LogTable'
 import OptionTable                        from '/app/components/OptionTable'
+import { actions as logActions }      from '/app/ducks/log'
 import { Header } from 'semantic-ui-react'
 axios = require 'axios'
 
@@ -16,9 +17,9 @@ class  LogContainer extends Component
     me = @ 
     <div className='table'>
       <Header as='h2' icon='history' content='History Log' />
-      <OptionTable onClick={@props.onClick}  />
+      <OptionTable onClick={@props.onClick}  select={@props.select}/>
 
-      <LogTable data={@props.logdata} />
+      <LogTable data={@props.logdata}  onPage = {@props.onPage}/>
     </div>
     
 
@@ -26,10 +27,11 @@ class  LogContainer extends Component
 
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->
-
-    console.log "dfdfd", key
+  onPage:(e)->
+    dispatch logActions.getfilterLog(e)
 
 mapStateToProps = ({log})=>
   logdata: log.logs
+  select: log.selector
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogContainer)

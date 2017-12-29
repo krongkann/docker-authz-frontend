@@ -13,7 +13,7 @@ class  DataTable extends Component
       <Table.Cell>{_.get me, 'props.data.command'} </Table.Cell>
       <Table.Cell>{(_.get me, 'props.data.allow').toString()} </Table.Cell>
        <Table.Cell>  </Table.Cell>
-      <Table.Cell>{_.get me, 'props.data.time'} </Table.Cell>
+      <Table.Cell>{_.get me, 'props.data.createdAt'} </Table.Cell>
     </Table.Row>
     
 export default DataTable

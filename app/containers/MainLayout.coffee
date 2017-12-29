@@ -52,8 +52,8 @@ mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch pageActions.doSelectPage(@name)
     dispatch logActions.getLog()
+    dispatch logActions.getSelector()
 mapStateToProps = ({page, login}) -> 
-  console.log 'login', login,page
   pageSelect: _.get page, 'active'
   user: login
 
