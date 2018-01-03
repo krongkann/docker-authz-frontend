@@ -36,7 +36,6 @@ class  LogTable extends Component
             data[0..5].map (v,k)->
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
               unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
-
                 v.node.createdAt = time.format "YYYY-MM-DD HH:mm:ss"
               else
                 v.node.createdAt = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
@@ -53,7 +52,7 @@ class  LogTable extends Component
                       me.setState 
                         pagegination: 'back'
                         cursor: cursor
-                      me.props.onPage(me.state)
+                      me.props.onPageBack(me.state)
                       } icon>
                   <Icon name='left chevron' />
                   {" "}
@@ -63,7 +62,7 @@ class  LogTable extends Component
                           me.setState 
                             pagegination: 'next'
                             cursor: cursor
-                          me.props.onPage(me.state)} icon>
+                          me.props.onPageNext(me.state)} icon>
                   Next
                   <Icon name='right chevron' />
                 </Menu.Item>

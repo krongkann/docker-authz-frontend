@@ -19,7 +19,7 @@ class  LogContainer extends Component
       <Header as='h2' icon='history' content='History Log' />
       <OptionTable onClick={@props.onClick}  select={@props.select}/>
 
-      <LogTable data={@props.logdata}  onPage = {@props.onPage}/>
+      <LogTable data={@props.logdata}  onPageNext = {@props.onPageNext}  onPageBack={@props.onPageBack}/>
     </div>
     
 
@@ -28,11 +28,13 @@ class  LogContainer extends Component
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch logActions.searchLog(key)
-  onPage:(e)->
-    dispatch logActions.getfilterLog(e)
+  onPageNext:(e)->
+    dispatch logActions.getfilterLogNext(e)
+  onPageBack:(e)->
+    dispatch logActions.getfilterLogBack(e)
+
 
 mapStateToProps = ({log})=>
-  console.log "log========", log 
   logdata: log.logs
   select: log.selector
 

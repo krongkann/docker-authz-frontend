@@ -5,7 +5,12 @@ axios = require 'axios'
 
 DEFAULT_STATE = {}
 
-export ACTIONS = defineAction('LOG', ['LOAD_DATA', 'SUCCESS', 'FILTER_LOG', 'SELECTOR', 'SEARCH']) 
+export ACTIONS = defineAction('LOG', ['LOAD_DATA', 
+                                      'SUCCESS', 
+                                      'FILTER_LOG', 
+                                      'SELECTOR', 
+                                      'SEARCH', 
+                                      'FILTER_LOG_BACK']) 
 
 export actions = 
   getLog: (servername)=>
@@ -48,14 +53,15 @@ query($after: String, $filter: LogsFilter, $first: Int){
 
 
       catch e
-  getfilterLog:(e)->
+  getfilterLogNext:(e)->
     query = """
-query($after: String, $filter: LogsFilter, $first: Int){
+query($after: String, $filter: LogsFilter, $first: Int, $before: String){
   logs(first: $first
+    before: $before
     after: $after
     filter: $filter
     ){
-    totalCount
+
     edges {
       node {
         id
@@ -68,29 +74,63 @@ query($after: String, $filter: LogsFilter, $first: Int){
       }
       cursor
     }
-    pageInfo {
-      endCursor
-    }
+    
   }
 }
 """
     (dispatch) =>
       try
+        console.log "======", e.cursor
         dispatch 
           type: ACTIONS.FILTER_LOG
         data = await client.request query,
         {
           after: e.cursor
         }
-
         dispatch 
           type: ACTIONS.LOAD_DATA
           payload: 
             logs: _.get data, 'logs.edges'
-
-
-
       catch e
+  getfilterLogBack:(e)->
+    query = """
+query($after: String, $filter: LogsFilter, $first: Int, $before: String){
+  logs(first: $first
+    before: $before
+    after: $after
+    filter: $filter
+    ){
+
+    edges {
+      node {
+        id
+        servername
+        username
+        command
+        allow
+        activity
+        createdAt
+      }
+      cursor
+    }
+    
+  }
+}
+"""
+    (dispatch) =>
+      try
+        dispatch 
+          type: ACTIONS.FILTER_LOG_BACK
+        data = await client.request query,
+        {
+          before: e.cursor
+        }
+        dispatch 
+          type: ACTIONS.LOAD_DATA
+          payload: 
+            logs: _.get data, 'logs.edges'
+      catch e
+
   getSelector:()->
     query = """
 query{
