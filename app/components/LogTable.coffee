@@ -33,10 +33,13 @@ class  LogTable extends Component
         {
           table= []
           if data
-            data[0..1].map (v,k)->
-              time = moment(_.get v, 'node.createdAt').utcOffset '+00:00'
-              v.node.createdAt = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
-              # v.node.createdAt = time.format "YYYY-MM-DD HH:mm:ss"
+            data[0..5].map (v,k)->
+              time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
+              unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
+
+                v.node.createdAt = time.format "YYYY-MM-DD HH:mm:ss"
+              else
+                v.node.createdAt = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
               table.push( <DataTable key={k} data={v.node} cursor= {v.cursor}/> )
           table

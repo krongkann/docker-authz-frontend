@@ -32,6 +32,7 @@ mapDispatchToProps = (dispatch) ->
     dispatch logActions.getfilterLog(e)
 
 mapStateToProps = ({log})=>
+  console.log "log========", log 
   logdata: log.logs
   select: log.selector
 

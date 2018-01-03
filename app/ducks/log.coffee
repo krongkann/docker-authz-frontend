@@ -121,18 +121,48 @@ query{
 
       catch e
   searchLog:({startDate, endDate, servername, username, command})->
-    console.log command
+    query = """
+query($after: String, $filter: LogsFilter, $first: Int){
+  logs(first: $first
+    after: $after
+    filter: $filter
+    ){
+    totalCount
+    edges {
+      node {
+        id
+        servername
+        username
+        command
+        allow
+        activity
+        createdAt
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+    }
+  }
+}
+"""
     (dispatch)=>
+      console.log startDate, endDate
       try
+        search    = await client.request query,
+          {
+            filter:
+              servername: servername[0]
+              username: username[0]
+              command: command[0]
+              from: startDate
+              to: endDate
+              admin: true
+          }
         dispatch 
-          type: ACTIONS.SEARCH
-          plyload:
-            servername: servername
-            username: username
-            command: command
-            date:
-              startDate: startDate
-              endDate: endDate
+          type: ACTIONS.LOAD_DATA
+          payload:
+            logs: _.get search, 'logs.edges'
 
       catch e
 
