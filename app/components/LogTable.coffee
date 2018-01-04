@@ -17,13 +17,16 @@ class  LogTable extends Component
     data = _.get me, 'props.data'
     w = window.innerWidth
     cursor = ""
-    # console.log  "======r", w
+    id =""
+    console.log me.state
     <div className='table'>
       <Table   size='small'
               celled 
+              compact
               selectable > 
         <Table.Header>
           <Table.Row>
+          <Table.HeaderCell>id</Table.HeaderCell>
             <Table.HeaderCell>UserName</Table.HeaderCell>
             <Table.HeaderCell>ServerName</Table.HeaderCell>
             <Table.HeaderCell>Command</Table.HeaderCell>
@@ -36,8 +39,7 @@ class  LogTable extends Component
         {
           table= []
           if data
-
-            data[0..10].map (v,k)->
+            data[0..5].map (v,k)->
               times  =  _.get v, 'node.createdAt' 
 
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
@@ -49,7 +51,10 @@ class  LogTable extends Component
               else
                 v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
-              table.push( <DataTable key={k} data={v.node} cursor= {v.cursor}/> )
+              id = v.node.id
+              console.log "========curr", cursor
+
+              table.push( <DataTable key={k} data={v.node} /> )
           table
         }
         </Table.Body>
@@ -64,6 +69,7 @@ class  LogTable extends Component
                       me.props.onPageBack(me.state)
                       } icon>
                   <Icon name='left chevron' />
+                  { console.log "=======cirr", cursor, id}
                   {" "}
                     Back
                 </Menu.Item>
@@ -85,4 +91,4 @@ class  LogTable extends Component
 
 
 
-export default Fullscreenable()(LogTable)
+export default connect()(LogTable)

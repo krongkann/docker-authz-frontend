@@ -12,7 +12,10 @@ class  DataImage extends Component
       <Table.Cell>{_.get me, 'props.data.repository_name'} </Table.Cell>
       <Table.Cell>{_.get me, 'props.data.tag'}</Table.Cell>
       <Table.Cell>{id[0..10]} </Table.Cell>
-      <Table.Cell>{(_.get me, 'props.data.allow').toString()} </Table.Cell>
+      <Table.Cell>{if (_.get me, 'props.data.allow')
+                    <Icon color='green' name='checkmark' size='large' />
+                  else
+                    <Icon color='red' name='remove' size='large' />} </Table.Cell>
     </Table.Row>
     
 export default DataImage

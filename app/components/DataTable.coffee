@@ -6,8 +6,9 @@ class  DataTable extends Component
 
   render:->
     me = @ 
-    
+
     <Table.Row  style={{"height": "100%"}}>
+    <Table.Cell>{_.get me, 'props.data.id'}</Table.Cell>
       <Table.Cell>{_.get me, 'props.data.username'}</Table.Cell>
       <Table.Cell>{_.get me, 'props.data.servername'} </Table.Cell>
       <Table.Cell>{_.get me, 'props.data.command'} </Table.Cell>

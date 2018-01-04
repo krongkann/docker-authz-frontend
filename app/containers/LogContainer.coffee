@@ -14,7 +14,7 @@ class  LogContainer extends Component
     @state = { }
 
   render: ->
-    me = @ 
+    me = @
     <div className='table'>
       <OptionTable onClick={@props.onClick}  select={@props.select}/>
 

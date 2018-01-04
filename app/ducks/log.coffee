@@ -65,10 +65,8 @@ export actions =
   getfilterLogNext:(e)->
     query = QUERYLOG
     (dispatch) =>
+      console.log "enddd======", e.cursor
       try
-        console.log "======", e.cursor
-        dispatch 
-          type: ACTIONS.FILTER_LOG
         data = await client.request query,
         {
           after: e.cursor
@@ -77,6 +75,10 @@ export actions =
           type: ACTIONS.LOAD_DATA
           payload: 
             logs: _.get data, 'logs.edges'
+        dispatch 
+          type: ACTIONS.FILTER_LOG
+       
+       
       catch e
   getfilterLogBack:(e)->
     query = QUERYLOG
@@ -146,6 +148,7 @@ query{
       catch e
 
 export default (state=DEFAULT_STATE, {type, payload})->
+
   switch type
     when ACTIONS.LOAD_DATA
       _.extend {}, state, 
@@ -156,7 +159,5 @@ export default (state=DEFAULT_STATE, {type, payload})->
     when ACTIONS.SEARCH
       _.extend {}, state,
         data: payload
-
-
     else
       state
