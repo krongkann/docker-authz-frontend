@@ -20,22 +20,47 @@ import {
 class  MainLayout extends Component
   constructor:(props)->
     super props 
-    @state = {}
-    
-  render: ->
-    me = @
-    <Router>
+    @state = {
+      activeItem: 'permission'
+      colorItem: 'white'
+    }
 
+    
+  render:( ) ->
+    me = @
+    activeItem = (_.get me, 'state.activeItem')
+
+
+    <Router>
       <div>
-        <Menu inverted >
-          <Menu.Item name='permission' as={Link} to='/permission'  onClick={me.props.onClick} />
-          <Menu.Item name='log' as={Link} to='/main'  onClick={me.props.onClick}/>
-          <Menu.Item name='image' as={Link} to='/image' onClick={me.props.onClick} />
+        <Menu  >
+          <Menu.Item name='permission' className='uiiimenu' active={activeItem is 'permission'}  as={Link} to='/permission'  
+              onClick={()->
+                me.props.onClick
+                me.setState 
+                  activeItem: 'permission' 
+                  colorItem: 'green'} />
+          <Menu.Item name='history log'   active={activeItem is 'history log'}  as={Link} to='/main'  
+            onClick={()->
+                me.props.onClick
+                me.setState 
+                  activeItem: 'history log'
+                  colorItem: 'green'}/>
+          <Menu.Item name='image'  active={activeItem is 'image'}  as={Link} to='/image'    onClick={()->
+                me.props.onClick
+                me.setState 
+                  activeItem: 'image'
+                  colorItem: 'green'} />
           <Menu.Menu position='right'>
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
-            <Menu.Item name='logout' as={Link} to='/logout' onClick={me.props.onClick} />
+            <Menu.Item name='logout'  active={activeItem is 'logout'}  as={Link} to='/logout' 
+              onClick={()-> 
+                me.props.onClick
+                me.setState 
+                  activeItem: 'logout' 
+                  colorItem: 'green'} />
           </Menu.Menu>
         </Menu>
         <Route exact path="/permission" component={PermissionContainer}/>
@@ -54,7 +79,7 @@ mapDispatchToProps = (dispatch) ->
     dispatch logActions.getLog()
     dispatch logActions.getSelector()
 mapStateToProps = ({page, login}) -> 
-  pageSelect: _.get page, 'active'
+  activeItem: _.get page, 'activePage'
   user: login
 
 

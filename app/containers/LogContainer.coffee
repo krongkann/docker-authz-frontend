@@ -4,28 +4,33 @@ import { ProgressBar }                 from 'react-bootstrap'
 import LogTable                        from '/app/components/LogTable'
 import OptionTable                        from '/app/components/OptionTable'
 import { actions as logActions }      from '/app/ducks/log'
-import { Header } from 'semantic-ui-react'
+import { Header, Modal } from 'semantic-ui-react'
 axios = require 'axios'
 
 
 class  LogContainer extends Component
   constructor:(props)->
     super props 
-    @state = {}
+    @state = { }
 
   render: ->
     me = @ 
     <div className='table'>
-      <Header as='h2' icon='history' content='History Log' />
       <OptionTable onClick={@props.onClick}  select={@props.select}/>
 
-      <LogTable data={@props.logdata}  onPageNext = {@props.onPageNext}  onPageBack={@props.onPageBack}/>
+      <LogTable data={@props.logdata}  
+                onPageNext = {@props.onPageNext} 
+       
+                onPageBack={@props.onPageBack}/>
+  
+      
     </div>
     
 
 
 
 mapDispatchToProps = (dispatch) ->
+
   onClick:(key)->
     dispatch logActions.searchLog(key)
   onPageNext:(e)->

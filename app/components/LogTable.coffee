@@ -5,6 +5,7 @@ import { Icon, Table,Menu } from 'semantic-ui-react'
 import DataTable from '/app/components/DataTable'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
+import Fullscreenable from 'react-fullscreenable'
 
 class  LogTable extends Component
   constructor:(props)->
@@ -16,27 +17,33 @@ class  LogTable extends Component
     data = _.get me, 'props.data'
     w = window.innerWidth
     cursor = ""
+    # console.log  "======r", w
     <div className='table'>
-      <Table   celled > 
+      <Table   size='small'
+              celled 
+              selectable > 
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>'#'</Table.HeaderCell>
             <Table.HeaderCell>UserName</Table.HeaderCell>
             <Table.HeaderCell>ServerName</Table.HeaderCell>
             <Table.HeaderCell>Command</Table.HeaderCell>
-            <Table.HeaderCell>Allow</Table.HeaderCell>
-            <Table.HeaderCell>Activity</Table.HeaderCell>
+            <Table.HeaderCell>Method</Table.HeaderCell>
             <Table.HeaderCell>Time</Table.HeaderCell>
+            <Table.HeaderCell>Details</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-          <Table.Body>
+          <Table.Body >
         {
           table= []
           if data
+
             data[0..5].map (v,k)->
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
               unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
                 v.node.createdAt = time.format "YYYY-MM-DD HH:mm:ss"
+                # if _.get me, 'state.pagegination' == 'next'
+                #   v.node.id = v.node.id + 1
+
               else
                 v.node.createdAt = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
@@ -76,4 +83,4 @@ class  LogTable extends Component
 
 
 
-export default connect()(LogTable)
+export default Fullscreenable()(LogTable)

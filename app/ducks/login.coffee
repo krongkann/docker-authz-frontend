@@ -29,7 +29,6 @@ export actions =
             response: (if _.get(response, 'data.error') then false else true)
             data: {username, password}
       catch e
-        console.log "====error ",e
         dispatch
           type: TYPES.SUCCESS
           payload: false

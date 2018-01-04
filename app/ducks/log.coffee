@@ -11,10 +11,8 @@ export ACTIONS = defineAction('LOG', ['LOAD_DATA',
                                       'SELECTOR', 
                                       'SEARCH', 
                                       'FILTER_LOG_BACK']) 
-
-export actions = 
-  getLog: (servername)=>
-    query = """
+QUERYLOG = 
+  """
 query($after: String, $filter: LogsFilter, $first: Int){
   logs(first: $first
     after: $after
@@ -30,6 +28,14 @@ query($after: String, $filter: LogsFilter, $first: Int){
         allow
         activity
         createdAt
+        message
+        error
+        auth_type
+        request_body
+        response_body
+        request_header
+        response_header
+        request_method
       }
       cursor
     }
@@ -39,6 +45,9 @@ query($after: String, $filter: LogsFilter, $first: Int){
   }
 }
 """
+export actions = 
+  getLog: (servername)=>
+    query = QUERYLOG
     (dispatch) =>
       try
         data = await client.request query
@@ -54,30 +63,7 @@ query($after: String, $filter: LogsFilter, $first: Int){
 
       catch e
   getfilterLogNext:(e)->
-    query = """
-query($after: String, $filter: LogsFilter, $first: Int, $before: String){
-  logs(first: $first
-    before: $before
-    after: $after
-    filter: $filter
-    ){
-
-    edges {
-      node {
-        id
-        servername
-        username
-        command
-        allow
-        activity
-        createdAt
-      }
-      cursor
-    }
-    
-  }
-}
-"""
+    query = QUERYLOG
     (dispatch) =>
       try
         console.log "======", e.cursor
@@ -93,30 +79,7 @@ query($after: String, $filter: LogsFilter, $first: Int, $before: String){
             logs: _.get data, 'logs.edges'
       catch e
   getfilterLogBack:(e)->
-    query = """
-query($after: String, $filter: LogsFilter, $first: Int, $before: String){
-  logs(first: $first
-    before: $before
-    after: $after
-    filter: $filter
-    ){
-
-    edges {
-      node {
-        id
-        servername
-        username
-        command
-        allow
-        activity
-        createdAt
-      }
-      cursor
-    }
-    
-  }
-}
-"""
+    query = QUERYLOG
     (dispatch) =>
       try
         dispatch 
@@ -161,31 +124,7 @@ query{
 
       catch e
   searchLog:({startDate, endDate, servername, username, command})->
-    query = """
-query($after: String, $filter: LogsFilter, $first: Int){
-  logs(first: $first
-    after: $after
-    filter: $filter
-    ){
-    totalCount
-    edges {
-      node {
-        id
-        servername
-        username
-        command
-        allow
-        activity
-        createdAt
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-    }
-  }
-}
-"""
+    query = QUERYLOG
     (dispatch)=>
       console.log startDate, endDate
       try

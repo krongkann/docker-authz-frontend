@@ -2,7 +2,8 @@
 
 import React,{Component}   from 'react'
 import moment              from 'moment'
-import { Dropdown, Label, Select, Grid, Button } from 'semantic-ui-react'
+import { Dropdown, Label, Select, Grid, Button, Menu, Input } from 'semantic-ui-react'
+import MenuOption from '/app/components/MenuOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -10,7 +11,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 class  OptionTable extends Component
   constructor: (props) ->
     super(props)
-    @state = {}
+    @state = {
+      btnOther: false
+    }
 
 
   render:->
@@ -58,6 +61,7 @@ class  OptionTable extends Component
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
+
             <DatePicker placeholderText="Date"
               selected={@state.startDate}
               className='date-picker' 
@@ -73,10 +77,37 @@ class  OptionTable extends Component
           </Grid.Column>
           <Grid.Column>
             <Button.Group>
-              <Button positive onClick={()-> me.props.onClick me.state } >Save</Button>
+              <Button positive onClick={()-> me.props.onClick me.state } >Search !</Button>
               <Button.Or />
-              <Button onClick={()-> console.log "Cancel"}>Cancel</Button>
+              <Button onClick={()-> me.setState btnOther: true }>
+                <Dropdown item text='Other'>
+                  <Dropdown.Menu>
+                    <Menu.Item name='inbox' >
+                      <Label color='teal'>1</Label>
+                      Inbox
+                    </Menu.Item>
+                    <Menu.Item name='spam' >
+                      <Label>51</Label>
+                      Spam
+                    </Menu.Item>
+
+                    <Menu.Item name='updates'  >
+                      <Label>1</Label>
+                      Updates
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Input icon='search'  />
+                    </Menu.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Button>
+
+
+                
             </Button.Group>
+       
+    
+
           </Grid.Column>
         </Grid.Row>
          
