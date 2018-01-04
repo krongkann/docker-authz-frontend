@@ -7,6 +7,7 @@ import ImageContainer                  from '/app/containers/ImageContainer'
 import { Input, Menu, Segment, Container } from 'semantic-ui-react'
 import { actions as pageActions }     from '/app/ducks/page'
 import { actions as logActions }      from '/app/ducks/log'
+import { actions as imageActions }      from '/app/ducks/image'
 import {
   BrowserRouter as Router,
   Route,
@@ -74,6 +75,7 @@ mapDispatchToProps = (dispatch) ->
     dispatch pageActions.doSelectPage(@name)
     dispatch logActions.getLog()
     dispatch logActions.getSelector()
+    dispatch imageActions.getAllImage()
 mapStateToProps = ({page, login}) -> 
   activeItem: _.get page, 'activePage'
   user: login

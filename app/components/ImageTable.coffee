@@ -2,12 +2,11 @@
 import React,{Component} from 'react'
 import { connect }                    from 'react-redux'
 import { Icon, Table,Menu } from 'semantic-ui-react'
-import DataTable from '/app/components/DataTable'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
-import Fullscreenable from 'react-fullscreenable'
+import DataImage from '/app/components/DataImage'
 
-class  LogTable extends Component
+class  ImageTable extends Component
   constructor:(props)->
     super props 
     @state = {}
@@ -15,21 +14,19 @@ class  LogTable extends Component
   render:->
     me = @
     data = _.get me, 'props.data'
-    w = window.innerWidth
     cursor = ""
-    # console.log  "======r", w
     <div className='table'>
       <Table   size='small'
               celled 
               selectable > 
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>UserName</Table.HeaderCell>
+            <Table.HeaderCell>Id</Table.HeaderCell>
             <Table.HeaderCell>ServerName</Table.HeaderCell>
-            <Table.HeaderCell>Command</Table.HeaderCell>
-            <Table.HeaderCell>Method</Table.HeaderCell>
-            <Table.HeaderCell>Time</Table.HeaderCell>
-            <Table.HeaderCell>Details</Table.HeaderCell>
+            <Table.HeaderCell>Repository</Table.HeaderCell>
+            <Table.HeaderCell>Tag</Table.HeaderCell>
+            <Table.HeaderCell>Image Id</Table.HeaderCell>
+            <Table.HeaderCell>Allow</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
           <Table.Body  >
@@ -37,19 +34,8 @@ class  LogTable extends Component
           table= []
           if data
 
-            data[0..10].map (v,k)->
-              times  =  _.get v, 'node.createdAt' 
-
-              time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
-              unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
-                times = time.format "YYYY-MM-DD HH:mm:ss"
-                # if _.get me, 'state.pagegination' == 'next'
-                #   v.node.id = v.node.id + 1
-
-              else
-                v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
-              cursor = v.cursor
-              table.push( <DataTable key={k} data={v.node} cursor= {v.cursor}/> )
+            data[0..9].map (v,k)->
+              table.push( <DataImage key={k} data={v} /> )
           table
         }
         </Table.Body>
@@ -61,7 +47,7 @@ class  LogTable extends Component
                       me.setState 
                         pagegination: 'back'
                         cursor: cursor
-                      me.props.onPageBack(me.state)
+                      me.props.onBack(me.state)
                       } icon>
                   <Icon name='left chevron' />
                   {" "}
@@ -71,7 +57,7 @@ class  LogTable extends Component
                           me.setState 
                             pagegination: 'next'
                             cursor: cursor
-                          me.props.onPageNext(me.state)} icon>
+                          me.props.onNext(me.state)} icon>
                   Next
                   <Icon name='right chevron' />
                 </Menu.Item>
@@ -85,4 +71,4 @@ class  LogTable extends Component
 
 
 
-export default Fullscreenable()(LogTable)
+export default connect()(ImageTable)

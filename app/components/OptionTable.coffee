@@ -76,35 +76,12 @@ class  OptionTable extends Component
              />
           </Grid.Column>
           <Grid.Column>
-            <Button.Group>
-              <Button positive onClick={()-> me.props.onClick me.state } >Search !</Button>
-              <Button.Or />
-              <Button onClick={()-> me.setState btnOther: true }>
-                <Dropdown item text='Other'>
-                  <Dropdown.Menu>
-                    <Menu.Item name='inbox' >
-                      <Label color='teal'>1</Label>
-                      Inbox
-                    </Menu.Item>
-                    <Menu.Item name='spam' >
-                      <Label>51</Label>
-                      Spam
-                    </Menu.Item>
-
-                    <Menu.Item name='updates'  >
-                      <Label>1</Label>
-                      Updates
-                    </Menu.Item>
-                    <Menu.Item>
-                      <Input icon='search'  />
-                    </Menu.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Button>
+            <Button positive onClick={()-> me.props.onClick me.state } >Search !</Button>
+        
+            
 
 
                 
-            </Button.Group>
        
     
 
