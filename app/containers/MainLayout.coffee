@@ -34,33 +34,29 @@ class  MainLayout extends Component
     <Router>
       <div>
         <Menu  >
-          <Menu.Item name='permission' className='uiiimenu' active={activeItem is 'permission'}  as={Link} to='/permission'  
+          <Menu.Item name='permission'  active={activeItem is 'permission'}  as={Link} to='/permission'  
               onClick={()->
-                me.props.onClick
+                me.props.onClick()
                 me.setState 
-                  activeItem: 'permission' 
-                  colorItem: 'green'} />
+                  activeItem: 'permission' } />
           <Menu.Item name='history log'   active={activeItem is 'history log'}  as={Link} to='/main'  
             onClick={()->
-                me.props.onClick
+                me.props.onClick()
                 me.setState 
-                  activeItem: 'history log'
-                  colorItem: 'green'}/>
+                  activeItem: 'history log'}/>
           <Menu.Item name='image'  active={activeItem is 'image'}  as={Link} to='/image'    onClick={()->
                 me.props.onClick
                 me.setState 
-                  activeItem: 'image'
-                  colorItem: 'green'} />
+                  activeItem: 'image'} />
           <Menu.Menu position='right'>
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
             <Menu.Item name='logout'  active={activeItem is 'logout'}  as={Link} to='/logout' 
               onClick={()-> 
-                me.props.onClick
+                me.props.onClick()
                 me.setState 
-                  activeItem: 'logout' 
-                  colorItem: 'green'} />
+                  activeItem: 'logout' } />
           </Menu.Menu>
         </Menu>
         <Route exact path="/permission" component={PermissionContainer}/>
