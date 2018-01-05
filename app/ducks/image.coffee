@@ -66,8 +66,11 @@ query($id: Int, $servername: String,
             message: e.message
 
         
-  showModal: ()=> 
+  showModal: (id)=> 
     type: ACTIONS.SHOW_MODAL
+    payload:
+      open: true
+      id: id
   closeModal:()->
     type: ACTIONS.CLOSE_MODAL
   permissionImage: (id)->
@@ -115,7 +118,8 @@ export default (state=DEFAULT_STATE, {type, payload})->
 
     when ACTIONS.SHOW_MODAL
       _.extend {}, state,
-        show: true
+        show: payload.open
+        id: payload.id
 
     when ACTIONS.CLOSE_MODAL
       _.extend {}, state,

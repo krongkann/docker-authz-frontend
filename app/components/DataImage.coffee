@@ -1,6 +1,6 @@
 import React,{Component}   from 'react'
 import moment              from 'moment'
-import { Icon, Table,Menu, Button, Header, Image, Modal, List, Label} from 'semantic-ui-react'
+import { Icon, Table,Button} from 'semantic-ui-react'
 class  DataImage extends Component
 
   render:->
@@ -16,6 +16,14 @@ class  DataImage extends Component
                     <Icon color='green' name='checkmark' size='large' />
                   else
                     <Icon color='red' name='remove' size='large' />} </Table.Cell>
+      <Table.Cell> 
+          <Button size='mini' color='red' onClick={()-> 
+            me.props.showModal((_.get me, 'props.data.id'))
+            }>
+             Allow
+          </Button>
+
+      </Table.Cell>
     </Table.Row>
     
 export default DataImage

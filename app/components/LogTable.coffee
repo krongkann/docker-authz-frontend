@@ -10,7 +10,10 @@ import Fullscreenable from 'react-fullscreenable'
 class  LogTable extends Component
   constructor:(props)->
     super props 
-    @state = {}
+    @state = {
+      last: Math.floor((window.innerHeight - 600) / 46)
+
+    }
 
   render:->
     me = @
@@ -18,8 +21,7 @@ class  LogTable extends Component
     w = window.innerWidth
     cursor = ""
     id =""
-    console.log me.state
-    <div className='table'>
+    <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
               compact
@@ -39,7 +41,7 @@ class  LogTable extends Component
         {
           table= []
           if data
-            data[0..5].map (v,k)->
+            data[0..me.state.last].map (v,k)->
               times  =  _.get v, 'node.createdAt' 
 
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'

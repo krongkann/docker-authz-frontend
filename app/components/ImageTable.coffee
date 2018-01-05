@@ -27,6 +27,7 @@ class  ImageTable extends Component
             <Table.HeaderCell>Tag</Table.HeaderCell>
             <Table.HeaderCell>Image Id</Table.HeaderCell>
             <Table.HeaderCell>Allow</Table.HeaderCell>
+            <Table.HeaderCell>ExtraInfo</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
           <Table.Body  >
@@ -35,7 +36,8 @@ class  ImageTable extends Component
           if data
 
             data[0..9].map (v,k)->
-              table.push( <DataImage key={k} data={v} /> )
+              table.push( <DataImage key={k} data={v} 
+                showModal={ me.props.showModal}/> )
           table
         }
         </Table.Body>
