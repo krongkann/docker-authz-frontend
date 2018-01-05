@@ -12,27 +12,37 @@ export ACTIONS = defineAction('IMAGE', ['RECEIVE_IMAGES',
                                         'SORT_IMAGE', 
                                         'CHANGE_ALLOW',
                                         'SEARCH_SERVER'
-                                        'SEARCH_IMAGE']) 
+                                        'SEARCH_IMAGE',
+                                        'PAGE_BACK'
+                                        'PAGE_NEXT',]) 
 QUERY = """
-query($id: Int, $servername: [String],
+query($id: Int, 
+      $servername: [String],
       $repository_name: String,
       $image_id: String,
-      $allow: Boolean){
+      $allow: Boolean,
+      $before: String,
+      $after: String){
   images(id: $id
-                servername: $servername
-                repository_name: $repository_name
-                image_id: $image_id
-                allow: $allow){
-    ListImage(servername: $servername){
-      id
-      servername
-      repository_name
-      tag
-      image_id
-      allow
-      extrainfo
+        before: $before
+        after: $after
+        servername: $servername
+        repository_name: $repository_name
+        image_id: $image_id
+        allow: $allow){
+    edges{
+      node{
+        id
+        servername
+        repository_name
+        tag
+        image_id
+        allow
+        extrainfo
+      }
+      cursor
     }
-
+   
     sortServername {
       servername
     }
@@ -50,7 +60,7 @@ export actions =
         dispatch 
           type: ACTIONS.RECEIVE_IMAGES
           payload: 
-            images: _.get data, 'images.ListImage'
+            images: _.get data, 'images.edges'
             selectorImage:  _.get data, 'images.sortServername'
 
 
@@ -79,7 +89,7 @@ export actions =
       dispatch 
         type: ACTIONS.RECEIVE_IMAGES
         payload: 
-          images: _.get data, 'images.ListImage'
+          images: _.get data, 'images.edges'
           selectorImage:  _.get data, 'images.sortServername'
     catch e
       dispatch
@@ -87,6 +97,40 @@ export actions =
         payload: 
           type: 'error'
           message: e.message
+  getfilterImageNext:(cursor)->
+    query = QUERY
+    (dispatch) =>
+      try
+        data = await client.request query,
+        {
+          after: cursor
+        }
+        dispatch 
+          type: ACTIONS.RECEIVE_IMAGES
+          payload: 
+            images: _.get data, 'images.edges'
+            selectorImage:  _.get data, 'images.sortServername'
+        dispatch 
+          type: ACTIONS.PAGE_NEXT
+       
+       
+      catch e
+  getfilterImageBack:(e)->
+    query = QUERY
+    (dispatch) =>
+      try
+        dispatch 
+          type: ACTIONS.PAGE_BACK
+        data = await client.request query,
+        {
+          before: e.cursor
+        }
+        dispatch 
+          type: ACTIONS.RECEIVE_IMAGES
+          payload: 
+            images: _.get data, 'images.edges'
+            selectorImage:  _.get data, 'images.sortServername'
+      catch e
 
   permissionImage: (id)-> 
     query = """

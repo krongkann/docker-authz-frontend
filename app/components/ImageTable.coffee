@@ -15,6 +15,7 @@ class  ImageTable extends Component
     me = @
     data = _.get me, 'props.data'
     cursor = ""
+    last = Math.floor((window.innerHeight - 85) / 100)
     <div className='table'>
       <Table   size='small'
               celled 
@@ -35,8 +36,9 @@ class  ImageTable extends Component
           table= []
           if data
 
-            data[0..9].map (v,k)->
-              table.push( <DataImage key={k} data={v} 
+            data[0..last].map (v,k)->
+              cursor =  v.cursor
+              table.push( <DataImage key={k} data={v.node} 
                 showModal={ me.props.showModal}/> )
           table
         }
@@ -46,20 +48,15 @@ class  ImageTable extends Component
             <Table.HeaderCell colSpan='12 '>
               <Menu floated='right'   pagination>
                 <Menu.Item as='a' onClick={()-> 
-                      me.setState 
-                        pagegination: 'back'
-                        cursor: cursor
-                      me.props.onBack(me.state)
+                      me.props.onBack(cursor)
                       } icon>
                   <Icon name='left chevron' />
                   {" "}
                     Back
                 </Menu.Item>
                 <Menu.Item as='a' onClick={()-> 
-                          me.setState 
-                            pagegination: 'next'
-                            cursor: cursor
-                          me.props.onNext(me.state)} icon>
+                  
+                          me.props.onNext(cursor)} icon>
                   Next
                   <Icon name='right chevron' />
                 </Menu.Item>

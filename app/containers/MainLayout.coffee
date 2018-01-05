@@ -76,7 +76,7 @@ mapDispatchToProps = (dispatch) ->
     dispatch pageActions.doSelectPage(@name)
     dispatch logActions.getLog()
     dispatch logActions.getSelector()
-    # dispatch imageActions.getAllImage()
+    dispatch imageActions.getAllImage()
 mapStateToProps = ({page, login}) -> 
   activeItem: _.get page, 'activePage'
   user: login

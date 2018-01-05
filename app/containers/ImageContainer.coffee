@@ -24,9 +24,11 @@ mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch imageActions.search(key)
   onNext:(e)->
-    dispatch logActions.getfilterLogNext(e)
+    console.log e
+    dispatch imageActions.getfilterImageNext(e)
   onBack:(e)->
-    dispatch logActions.getfilterLogBack(e)
+    console.log e
+    dispatch imageActions.getfilterImageBack(e)
   showModal:(e)->
     dispatch imageActions.showModal(e)
 

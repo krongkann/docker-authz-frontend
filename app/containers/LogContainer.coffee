@@ -33,7 +33,6 @@ mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch logActions.searchLog(key)
   onPageNext:(e)->
-    console.log "===========dispatch",e
     dispatch logActions.getfilterLogNext(e)
   onPageBack:(e)->
     dispatch logActions.getfilterLogBack(e)

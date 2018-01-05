@@ -17,7 +17,6 @@ class  LogTable extends Component
     cursor = ""
     id =""
     last = Math.floor((window.innerHeight - 600) / 46)
-    console.log "popopop", last
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
