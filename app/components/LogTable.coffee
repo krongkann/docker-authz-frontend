@@ -8,12 +8,7 @@ import prettyMs            from 'pretty-ms'
 import Fullscreenable from 'react-fullscreenable'
 
 class  LogTable extends Component
-  constructor:(props)->
-    super props 
-    @state = {
-      last: Math.floor((window.innerHeight - 600) / 46)
 
-    }
 
   render:->
     me = @
@@ -21,6 +16,8 @@ class  LogTable extends Component
     w = window.innerWidth
     cursor = ""
     id =""
+    last = Math.floor((window.innerHeight - 600) / 46)
+    console.log "popopop", last
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
@@ -41,7 +38,7 @@ class  LogTable extends Component
         {
           table= []
           if data
-            data[0..me.state.last].map (v,k)->
+            data[0..last].map (v,k)->
               times  =  _.get v, 'node.createdAt' 
 
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
@@ -54,8 +51,7 @@ class  LogTable extends Component
                 v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
               id = v.node.id
-              console.log "========curr", cursor
-
+              
               table.push( <DataTable key={k} data={v.node} /> )
           table
         }
@@ -65,21 +61,13 @@ class  LogTable extends Component
             <Table.HeaderCell colSpan='12 '>
               <Menu floated='right'   pagination>
                 <Menu.Item as='a' onClick={()-> 
-                      me.setState 
-                        pagegination: 'back'
-                        cursor: cursor
-                      me.props.onPageBack(me.state)
-                      } icon>
+                      me.props.onPageBack(cursor)        } icon>
                   <Icon name='left chevron' />
-                  { console.log "=======cirr", cursor, id}
                   {" "}
                     Back
                 </Menu.Item>
                 <Menu.Item as='a' onClick={()-> 
-                          me.setState 
-                            pagegination: 'next'
-                            cursor: cursor
-                          me.props.onPageNext(me.state)} icon>
+                          me.props.onPageNext(cursor)} icon>
                   Next
                   <Icon name='right chevron' />
                 </Menu.Item>

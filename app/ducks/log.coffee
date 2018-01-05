@@ -13,10 +13,11 @@ export ACTIONS = defineAction('LOG', ['LOAD_DATA',
                                       'FILTER_LOG_BACK']) 
 QUERYLOG = 
   """
-query($after: String, $filter: LogsFilter, $first: Int){
+query($after: String, $before: String, $filter: LogsFilter, $first: Int){
   logs(first: $first
     after: $after
     filter: $filter
+    before: $before
     ){
     totalCount
     edges {
@@ -62,14 +63,13 @@ export actions =
 
 
       catch e
-  getfilterLogNext:(e)->
+  getfilterLogNext:(cursor)->
     query = QUERYLOG
     (dispatch) =>
-      console.log "enddd======", e.cursor
       try
         data = await client.request query,
         {
-          after: e.cursor
+          after: cursor
         }
         dispatch 
           type: ACTIONS.LOAD_DATA

@@ -9,21 +9,20 @@ axios = require 'axios'
 
 
 class  LogContainer extends Component
-  constructor:(props)->
-    super props 
-    @state = { }
 
   render: ->
     me = @
+
     <div className='table'>
+    
       <OptionTable onClick={@props.onClick}  select={@props.select}/>
+      
 
       <LogTable data={@props.logdata}  
                 onPageNext = {@props.onPageNext} 
        
                 onPageBack={@props.onPageBack}/>
   
-      
     </div>
     
 
@@ -34,6 +33,7 @@ mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch logActions.searchLog(key)
   onPageNext:(e)->
+    console.log "===========dispatch",e
     dispatch logActions.getfilterLogNext(e)
   onPageBack:(e)->
     dispatch logActions.getfilterLogBack(e)
