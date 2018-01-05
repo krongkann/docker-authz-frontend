@@ -15,7 +15,7 @@ class  DataTable extends Component
       <Table.Cell>{_.get me, 'props.data.request_method'}</Table.Cell>
       <Table.Cell>{_.get me, 'props.data.createdAt'} </Table.Cell>
       <Table.Cell> 
-        <Modal size='tiny' style={height: '50%'}  trigger={<Button animated='vertical'>
+        <Modal size='tiny' style={height: '50%'}  trigger={<Button color='pink' size='tiny' animated='vertical'>
           <Button.Content hidden>Detail</Button.Content>
           <Button.Content visible>
             <Icon name='question circle outline' />

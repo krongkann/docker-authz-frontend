@@ -25,7 +25,7 @@ class  LogTable extends Component
         <Table.Header>
           <Table.Row>
           <Table.HeaderCell>id</Table.HeaderCell>
-            <Table.HeaderCell>UserName</Table.HeaderCell>
+            <Table.HeaderCell >UserName</Table.HeaderCell>
             <Table.HeaderCell>ServerName</Table.HeaderCell>
             <Table.HeaderCell>Command</Table.HeaderCell>
             <Table.HeaderCell>Method</Table.HeaderCell>
@@ -50,7 +50,7 @@ class  LogTable extends Component
                 v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
               id = v.node.id
-              
+
               table.push( <DataTable key={k} data={v.node} /> )
           table
         }

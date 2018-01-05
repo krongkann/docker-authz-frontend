@@ -24,11 +24,11 @@ class  OptionTable extends Component
     <div className='option-table'> 
       <Grid columns={3}>
         <Grid.Column >
-          <Header size='small'>Server Name</Header>
-          <Header size='small'>User Name</Header>
-          <Header size='small'>Command</Header>
-          <Header size='small'>Date</Header>
-          <Header size='small'>To</Header>
+          <Header size='tiny'>Server Name</Header>
+          <Header size='tiny'>User Name</Header>
+          <Header size='tiny'>Command</Header>
+          <Header size='tiny'>Date</Header>
+          <Header size='tiny'>To</Header>
         </Grid.Column>
         <Grid.Column>
 
@@ -79,9 +79,9 @@ class  OptionTable extends Component
         </Grid.Column>
         
         <Grid.Row>
-          <Button color='teal'>Export CSV</Button>
-          <Button color='blue'>Export PDF</Button>
-          <Button positive onClick={()-> me.props.onClick me.state } >Search !</Button>
+          <Button size='tiny' color='teal'>Export CSV</Button>
+          <Button size='tiny'  color='blue'>Export PDF</Button>
+          <Button size='tiny'  positive onClick={()-> me.props.onClick me.state } >Search !</Button>
 
         </Grid.Row>
          

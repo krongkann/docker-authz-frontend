@@ -17,7 +17,7 @@ class  DataImage extends Component
                   else
                     <Icon color='red' name='remove' size='large' />} </Table.Cell>
       <Table.Cell> 
-          <Button size='mini' color='red' onClick={()-> 
+          <Button size='mini' color='teal' onClick={()-> 
             me.props.showModal((_.get me, 'props.data.id'))
             }>
              Allow
