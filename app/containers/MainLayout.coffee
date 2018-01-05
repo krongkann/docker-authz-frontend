@@ -45,8 +45,9 @@ class  MainLayout extends Component
                 me.props.onClick()
                 me.setState 
                   activeItem: 'history log'}/>
-          <Menu.Item name='image'  active={activeItem is 'image'}  as={Link} to='/image'    onClick={()->
-                me.props.onClick
+          <Menu.Item name='image'  active={activeItem is 'image'}  as={Link} to='/image'    
+            onClick={()->
+                me.props.onClick()
                 me.setState 
                   activeItem: 'image'} />
           <Menu.Menu position='right'>
@@ -72,9 +73,9 @@ class  MainLayout extends Component
 
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->
-    dispatch pageActions.doSelectPage(@name)
-    dispatch logActions.getLog()
-    dispatch logActions.getSelector()
+    # dispatch pageActions.doSelectPage(@name)
+    # dispatch logActions.getLog()
+    # dispatch logActions.getSelector()
     dispatch imageActions.getAllImage()
 mapStateToProps = ({page, login}) -> 
   activeItem: _.get page, 'activePage'

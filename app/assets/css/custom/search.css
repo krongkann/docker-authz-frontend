@@ -15,6 +15,9 @@
 .col-xs-6 {
   font-size: large;
 }
+.option-image{
+  padding: 20px;
+}
 .log-out{
   display: initial;
   padding-left: 80;

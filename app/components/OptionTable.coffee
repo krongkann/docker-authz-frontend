@@ -23,7 +23,7 @@ class  OptionTable extends Component
     stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }]
     <div className='option-table'> 
       <Grid columns={3}>
-        <Grid.Column>
+        <Grid.Column >
           <Header size='small'>Server Name</Header>
           <Header size='small'>User Name</Header>
           <Header size='small'>Command</Header>

@@ -3,10 +3,11 @@ import { connect }                     from 'react-redux'
 import ImageTable                        from '/app/components/ImageTable'
 import { actions as imageActions }      from '/app/ducks/image'
 import ShowModal from '/app/containers/ShowModal'
-
+import SearchImage from '/app/containers/SearchImage'
 class  ImageContainer extends Component
   render: ->
     <div className='table'>
+      <SearchImage onClick={@props.onClick}/>
       <ImageTable data={@props.imagedata}  
           onNext={@props.onNext} 
           onBack={@props.onBack} 
@@ -21,7 +22,7 @@ class  ImageContainer extends Component
 mapDispatchToProps = (dispatch) ->
 
   onClick:(key)->
-    dispatch logActions.searchLog(key)
+    dispatch imageActions.search(key)
   onNext:(e)->
     dispatch logActions.getfilterLogNext(e)
   onBack:(e)->

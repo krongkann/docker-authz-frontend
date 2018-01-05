@@ -11,12 +11,10 @@ export ACTIONS = defineAction('IMAGE', ['RECEIVE_IMAGES',
                                         'CLOSE_MODAL', 
                                         'SORT_IMAGE', 
                                         'CHANGE_ALLOW',
-                                        'SEARCH_SERVER']) 
-
-export actions = 
-  getAllImage: (servername)=>
-    query = """
-query($id: Int, $servername: String,
+                                        'SEARCH_SERVER'
+                                        'SEARCH_IMAGE']) 
+QUERY = """
+query($id: Int, $servername: [String],
       $repository_name: String,
       $image_id: String,
       $allow: Boolean){
@@ -37,25 +35,23 @@ query($id: Int, $servername: String,
 
     sortServername {
       servername
-
     }
   }
 }
 
-
 """
+
+export actions = 
+  getAllImage: (servername)=>
+    query = QUERY
     (dispatch) =>
       try
-        data = await client.request query,
-        {
-          servername: servername
-        }
-        
+        data = await client.request query
         dispatch 
           type: ACTIONS.RECEIVE_IMAGES
           payload: 
             images: _.get data, 'images.ListImage'
-            servers:  _.get data, 'images.sortServername'
+            selectorImage:  _.get data, 'images.sortServername'
 
 
       catch e
@@ -73,7 +69,26 @@ query($id: Int, $servername: String,
       id: id
   closeModal:()->
     type: ACTIONS.CLOSE_MODAL
-  permissionImage: (id)->
+  search:(name)-> (dispatch) ->
+    query = QUERY
+    try
+      data = await client.request query,
+      {
+        servername: name.servername
+      }
+      dispatch 
+        type: ACTIONS.RECEIVE_IMAGES
+        payload: 
+          images: _.get data, 'images.ListImage'
+          selectorImage:  _.get data, 'images.sortServername'
+    catch e
+      dispatch
+        type: systemActionTypes.SHOW_NOTIFY
+        payload: 
+          type: 'error'
+          message: e.message
+
+  permissionImage: (id)-> 
     query = """
 mutation($input: updateImagesInputType!){
   updateImage(input:$input ){
@@ -110,7 +125,7 @@ export default (state=DEFAULT_STATE, {type, payload})->
     when ACTIONS.RECEIVE_IMAGES
       _.extend {}, state, 
         images: payload.images 
-        servers: payload.servers
+        selectorImage: payload.selectorImage
 
     when ACTIONS.SORTIMAGE 
       _.extend {}, state,
