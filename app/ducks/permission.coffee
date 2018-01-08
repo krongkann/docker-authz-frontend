@@ -1,7 +1,7 @@
 import { defineAction } from 'redux-define'
 axios = require 'axios'
 
-DEFAULT_STATE = { servernames: ['gg', 'hh'] }
+DEFAULT_STATE = { servernames: ['gg', 'hh'], commands: { puppy: true } }
 
 export TYPES = defineAction('PERMISSSION',
   ['SET', 'SELECT_USERNAME', 'SELECT_SERVERNAME', 'CHANGE'])
@@ -16,6 +16,9 @@ export actions =
       dispatch
         type: TYPES.SET
         payload: { servernames, usernames, commands }
+  changePermission: (params) ->
+    (dispatch) ->
+      console.log 'trap ', params
 
 export default (state = DEFAULT_STATE, action) ->
   switch action.type

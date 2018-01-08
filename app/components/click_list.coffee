@@ -8,7 +8,7 @@ export default class ClickList extends Component
   data: []
   keys: []
   header: ''
-  listOnClick: () ->
+  listOnClick: (value) ->
 
   listOnKeyDown: (keyCode) ->
 
@@ -16,11 +16,11 @@ export default class ClickList extends Component
   
   render: ->
     me = @
-    <div  className='containervv'>
+    <div className='containervv'>
       <h4>{ me.header }</h4>
       <select style={ fontSize: 15 } size={ 17 }
-        onChange={ () ->
-          me.listOnClick()
+        onChange={ (event) ->
+          me.listOnClick event.target.value
         }
         onKeyDown={ (event) ->
           me.listOnKeyDown event.keyCode

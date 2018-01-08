@@ -1,26 +1,28 @@
 import React, { Component } from 'react'
-import ClickList from './click_list'
-import store from '/app/redux'
+import { connect }          from 'react-redux'
+import ClickList            from './click_list'
+import { TYPES }            from '/app/ducks/permission'
 
-export default class UsernameSelector extends ClickList
+class UsernameSelector extends ClickList
 
   meUs = null
-  listOnClick: () ->
-    store.dispatch
-      type: 'SELECT_USERNAME'
-      username: meUs.data[meUs.list.selectedIndex]
+  listOnClick: (value) ->
+    @props.onClick value
 
-  componentWillMount: ->
+  componentWillMount: (props) ->
     meUs = @
     meUs.header = 'Username :'
-    meUs.data = getUsername()
-    meUs.items = meUs.keys = meUs.data
-  
-  store.subscribe () ->
-    meUs.data = getUsername()
-    meUs.items = meUs.keys = meUs.data
-    meUs.forceUpdate()
+    if @props.data
+      meUs.items = meUs.keys = meUs.data = @props.data
+    else
+      meUs.items = meUs.keys = meUs.data = []
 
-  getUsername = () ->
-    data = _.get store.getState(), 'usernames', []
-    _.sortBy data
+mapDispatchToProps = (dispatch) ->
+  onClick: (value) ->
+    console.log 'trap\n\n\n\n\n\n' + value
+    dispatch
+      type: TYPES.SELECT_SERVERNAME
+      payload: value
+mapStateToProps = ({permission}) -> 
+  data: permission.usernames
+export default connect(mapStateToProps, mapDispatchToProps)(UsernameSelector)
