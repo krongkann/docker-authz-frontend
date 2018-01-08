@@ -13,8 +13,7 @@ export ACTIONS = defineAction('IMAGE', ['RECEIVE_IMAGES',
                                         'CHANGE_ALLOW',
                                         'SEARCH_SERVER'
                                         'SEARCH_IMAGE',
-                                        'PAGE_BACK'
-                                        'PAGE_NEXT',]) 
+                                        'PAGE_SELECT',]) 
 QUERY = """
 query($id: Int, 
       $servername: [String],
@@ -111,7 +110,8 @@ export actions =
             images: _.get data, 'images.edges'
             selectorImage:  _.get data, 'images.sortServername'
         dispatch 
-          type: ACTIONS.PAGE_NEXT
+          type: ACTIONS.PAGE_SELECT
+          payload: 'next'
        
        
       catch e
@@ -120,7 +120,8 @@ export actions =
     (dispatch) =>
       try
         dispatch 
-          type: ACTIONS.PAGE_BACK
+          type: ACTIONS.PAGE_SELECT
+          payload: 'back'
         data = await client.request query,
         {
           before: e.cursor
@@ -183,6 +184,9 @@ export default (state=DEFAULT_STATE, {type, payload})->
     when ACTIONS.CLOSE_MODAL
       _.extend {}, state,
         show: false
+    when ACTIONS.PAGE_SELECT
+      _.extend {}, state,
+        page: payload
 
     when ACTIONS.CHANGE_ALLOW
       _.extend {}, state,

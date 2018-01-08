@@ -15,7 +15,9 @@ class  ImageTable extends Component
     me = @
     data = _.get me, 'props.data'
     cursor = ""
+    first = 0
     last = Math.floor((window.innerHeight - 85) / 100)
+    console.log me.props.pagination
     <div className='table'>
       <Table   size='small'
               celled 
@@ -35,8 +37,13 @@ class  ImageTable extends Component
         {
           table= []
           if data
-            console.log (last / data.length) ,"-=--=-="
-            data[0..last].map (v,k)->
+            if me.props.pagination == 'back'
+              console.log "===="
+              first_old = data.length - (2)
+              first_new = first_old - (last) 
+              first = (first_new - last)
+              last = first_new
+            data[first..last].map (v,k)->
               cursor =  v.cursor
               table.push( <DataImage key={k} data={v.node} 
                 showModal={ me.props.showModal}/> )
