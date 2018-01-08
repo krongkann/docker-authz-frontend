@@ -19,6 +19,7 @@ class  LogTable extends Component
     id = ""
     first = 1
     last = Math.floor((window.innerHeight - 600) / 46)
+    console.log me.props.pagination
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
@@ -38,20 +39,19 @@ class  LogTable extends Component
           <Table.Body  >
         {
           table= []
-          num = [] 
           if data
-            lastValue =data.length
             data[0..last].map (v,k)->
               times  =  _.get v, 'node.createdAt' 
-
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
               unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
                 times = time.format "YYYY-MM-DD HH:mm:ss"
+                v.node.createdAt = times
               else
                 v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
-              table.push( <DataTable key={k} data={v.node} /> )
+              
 
+              table.push( <DataTable key={k} data={v.node} /> )
           table
 
 
@@ -59,7 +59,6 @@ class  LogTable extends Component
         </Table.Body>
         <Pagination   onPageBack={()-> me.props.onPageBack(cursor)}
                       cursor ={cursor}
-                      lastValue ={lastValue}
                       onPageNext={()-> me.props.onPageNext(cursor)} />
       </Table>
     </div>

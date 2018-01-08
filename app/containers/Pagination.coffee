@@ -2,17 +2,17 @@ import React,{Component}               from 'react'
 import { connect }                     from 'react-redux'
 import ImageTable                        from '/app/components/ImageTable'
 import { actions as imageActions }      from '/app/ducks/image'
-import { Icon, Table,Menu } from 'semantic-ui-react'
+import { Icon, Table,Menu, Label } from 'semantic-ui-react'
 class  Pagination extends Component
   constructor:(props)->
     super props 
     @state = {
-      page: 'null'
+      page: 1
     }
   render: ->
     me = @
-    disabledend =  ((_.get @, 'props.cursorend.endCursor') == me.props.cursor)
-    disabledback = ((_.get me, 'props.lastValue') ==  me.props.total) 
+    disablednext =  ((_.get @, 'props.cursorend.endCursor') == me.props.cursor)
+    disabledback = (@state.page == 1 )
     <Table.Footer>
       <Table.Row>
         <Table.HeaderCell colSpan='12 '>
@@ -20,23 +20,28 @@ class  Pagination extends Component
             <Menu.Item as='a' 
               disabled={disabledback}
               onClick={(cursor)->
-                  me.setState 
-                    page: 'back'
-                  me.props.onPageBack(cursor)        } icon>
+                    me.setState 
+                      page: me.state.page - 1
+                    me.props.onPageBack(cursor)        } icon>
               <Icon name='left chevron' />
               {" "}
                 Back
             </Menu.Item>
             <Menu.Item as='a'
-              disabled = {disabledend}
+              disabled = {disablednext}
               onClick={(cursor)-> 
                       me.setState 
-                        page: 'next'
+                        page: me.state.page + 1
                       me.props.onPageNext(cursor)} icon>
               Next
               <Icon name='right chevron' />
             </Menu.Item>
           </Menu>
+          <Label>
+            PAGE :
+            <Label.Detail>{me.state.page}</Label.Detail>
+          </Label>
+            
         </Table.HeaderCell>
       </Table.Row>
     </Table.Footer>

@@ -84,16 +84,15 @@ export actions =
        
        
       catch e
-  getfilterLogBack:(e)->
+  getfilterLogBack:(cursor)->
     query = QUERYLOG
     (dispatch) =>
       try
-        dispatch 
-          type: ACTIONS.FILTER_LOG
-          payload: 'back'
+        console.log "currrsorrrr", cursor
+
         data = await client.request query,
         {
-          before: e.cursor
+          before: cursor
         }
         dispatch 
           type: ACTIONS.LOAD_DATA
@@ -101,6 +100,9 @@ export actions =
             logs: _.get data, 'logs.edges'
             total: _.get data, 'logs.totalCount'
             endcursor: _.get data, 'logs.pageInfo'
+        dispatch 
+          type: ACTIONS.FILTER_LOG
+          payload: 'back'
       catch e
 
   getSelector:()->
@@ -135,14 +137,13 @@ query{
   searchLog:({startDate, endDate, servername, username, command})->
     query = QUERYLOG
     (dispatch)=>
-      console.log startDate, endDate
       try
         search    = await client.request query,
           {
             filter:
-              servername: servername[0]
-              username: username[0]
-              command: command[0]
+              servername: servername
+              username: username
+              command: command
               from: startDate
               to: endDate
               admin: true

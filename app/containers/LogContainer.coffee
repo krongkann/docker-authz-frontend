@@ -19,7 +19,7 @@ class  LogContainer extends Component
       
 
       <LogTable data={@props.logdata}
-      
+                total = {@props.total}
                 onPageNext = {@props.onPageNext} 
                 pagination = {@props.pagination}
                 onPageBack={@props.onPageBack}/>
@@ -41,6 +41,7 @@ mapDispatchToProps = (dispatch) ->
 
 mapStateToProps = ({log})=>
   logdata: log.logs
+  total: log.total
   pagination: log.page
   select: log.selector
 
