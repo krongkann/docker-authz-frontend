@@ -57,6 +57,7 @@ export actions =
           payload: 
             logs: _.get data, 'logs.edges'
             total: _.get data, 'logs.totalCount'
+            endcursor: _.get data, 'logs.pageInfo'
         dispatch 
           type: ACTIONS.SUCCESS
           payload: true
@@ -75,8 +76,11 @@ export actions =
           type: ACTIONS.LOAD_DATA
           payload: 
             logs: _.get data, 'logs.edges'
+            total: _.get data, 'logs.totalCount'
+            endcursor: _.get data, 'logs.pageInfo'
         dispatch 
           type: ACTIONS.FILTER_LOG
+          payload: 'next'
        
        
       catch e
@@ -85,7 +89,8 @@ export actions =
     (dispatch) =>
       try
         dispatch 
-          type: ACTIONS.FILTER_LOG_BACK
+          type: ACTIONS.FILTER_LOG
+          payload: 'back'
         data = await client.request query,
         {
           before: e.cursor
@@ -94,6 +99,8 @@ export actions =
           type: ACTIONS.LOAD_DATA
           payload: 
             logs: _.get data, 'logs.edges'
+            total: _.get data, 'logs.totalCount'
+            endcursor: _.get data, 'logs.pageInfo'
       catch e
 
   getSelector:()->
@@ -152,12 +159,17 @@ export default (state=DEFAULT_STATE, {type, payload})->
   switch type
     when ACTIONS.LOAD_DATA
       _.extend {}, state, 
-        logs: payload.logs 
+        logs: payload.logs
+        total: payload.total
+        endcursor: payload.endcursor
     when ACTIONS.SELECTOR
       _.extend {}, state,
         selector: payload
     when ACTIONS.SEARCH
       _.extend {}, state,
         data: payload
+    when ACTIONS.FILTER_LOG
+      _.extend {}, state,
+        page: payload
     else
       state

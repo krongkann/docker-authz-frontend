@@ -18,9 +18,10 @@ class  LogContainer extends Component
       <OptionTable onClick={@props.onClick}  select={@props.select}/>
       
 
-      <LogTable data={@props.logdata}  
+      <LogTable data={@props.logdata}
+      
                 onPageNext = {@props.onPageNext} 
-       
+                pagination = {@props.pagination}
                 onPageBack={@props.onPageBack}/>
   
     </div>
@@ -40,6 +41,7 @@ mapDispatchToProps = (dispatch) ->
 
 mapStateToProps = ({log})=>
   logdata: log.logs
+  pagination: log.page
   select: log.selector
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogContainer)

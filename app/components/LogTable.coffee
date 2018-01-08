@@ -3,6 +3,7 @@ import React,{Component} from 'react'
 import { connect }                    from 'react-redux'
 import { Icon, Table,Menu } from 'semantic-ui-react'
 import DataTable from '/app/components/DataTable'
+import Pagination from '/app/containers/Pagination'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
 import Fullscreenable from 'react-fullscreenable'
@@ -15,7 +16,8 @@ class  LogTable extends Component
     data = _.get me, 'props.data'
     w = window.innerWidth
     cursor = ""
-    id =""
+    id = ""
+    first = 1
     last = Math.floor((window.innerHeight - 600) / 46)
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
@@ -24,7 +26,7 @@ class  LogTable extends Component
               selectable > 
         <Table.Header>
           <Table.Row>
-          <Table.HeaderCell>id</Table.HeaderCell>
+          <Table.HeaderCell>Id</Table.HeaderCell>
             <Table.HeaderCell >UserName</Table.HeaderCell>
             <Table.HeaderCell>ServerName</Table.HeaderCell>
             <Table.HeaderCell>Command</Table.HeaderCell>
@@ -36,44 +38,29 @@ class  LogTable extends Component
           <Table.Body  >
         {
           table= []
+          num = [] 
           if data
+            lastValue =data.length
             data[0..last].map (v,k)->
               times  =  _.get v, 'node.createdAt' 
 
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
               unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
                 times = time.format "YYYY-MM-DD HH:mm:ss"
-                # if _.get me, 'state.pagegination' == 'next'
-                #   v.node.id = v.node.id + 1
-
               else
                 v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
-              id = v.node.id
-
               table.push( <DataTable key={k} data={v.node} /> )
+
           table
+
+
         }
         </Table.Body>
-        <Table.Footer>
-          <Table.Row>
-            <Table.HeaderCell colSpan='12 '>
-              <Menu floated='right'   pagination>
-                <Menu.Item as='a' onClick={()-> 
-                      me.props.onPageBack(cursor)        } icon>
-                  <Icon name='left chevron' />
-                  {" "}
-                    Back
-                </Menu.Item>
-                <Menu.Item as='a' onClick={()-> 
-                          me.props.onPageNext(cursor)} icon>
-                  Next
-                  <Icon name='right chevron' />
-                </Menu.Item>
-              </Menu>
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer>
+        <Pagination   onPageBack={()-> me.props.onPageBack(cursor)}
+                      cursor ={cursor}
+                      lastValue ={lastValue}
+                      onPageNext={()-> me.props.onPageNext(cursor)} />
       </Table>
     </div>
 
