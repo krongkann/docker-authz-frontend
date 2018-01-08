@@ -5,15 +5,19 @@ axios = require 'axios'
 
 DEFAULT_STATE = {}
 
-export ACTIONS = defineAction('LOG', ['LOAD_DATA', 'SUCCESS', 'FILTER_LOG', 'SELECTOR']) 
-
-export actions = 
-  getLog: (servername)=>
-    query = """
-query($after: String, $filter: LogsFilter, $first: Int){
+export ACTIONS = defineAction('LOG', ['LOAD_DATA', 
+                                      'SUCCESS', 
+                                      'FILTER_LOG', 
+                                      'SELECTOR', 
+                                      'SEARCH', 
+                                      'FILTER_LOG_BACK']) 
+QUERYLOG = 
+  """
+query($after: String, $before: String, $filter: LogsFilter, $first: Int){
   logs(first: $first
     after: $after
     filter: $filter
+    before: $before
     ){
     totalCount
     edges {
@@ -25,6 +29,14 @@ query($after: String, $filter: LogsFilter, $first: Int){
         allow
         activity
         createdAt
+        message
+        error
+        auth_type
+        request_body
+        response_body
+        request_header
+        response_header
+        request_method
       }
       cursor
     }
@@ -34,6 +46,9 @@ query($after: String, $filter: LogsFilter, $first: Int){
   }
 }
 """
+export actions = 
+  getLog: (servername)=>
+    query = QUERYLOG
     (dispatch) =>
       try
         data = await client.request query
@@ -48,49 +63,39 @@ query($after: String, $filter: LogsFilter, $first: Int){
 
 
       catch e
-  getfilterLog:(e)->
-    query = """
-query($after: String, $filter: LogsFilter, $first: Int){
-  logs(first: $first
-    after: $after
-    filter: $filter
-    ){
-    totalCount
-    edges {
-      node {
-        id
-        servername
-        username
-        command
-        allow
-        activity
-        createdAt
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-    }
-  }
-}
-"""
+  getfilterLogNext:(cursor)->
+    query = QUERYLOG
     (dispatch) =>
       try
-        dispatch 
-          type: ACTIONS.FILTER_LOG
         data = await client.request query,
         {
-          after: e.cursor
+          after: cursor
         }
-
         dispatch 
           type: ACTIONS.LOAD_DATA
           payload: 
             logs: _.get data, 'logs.edges'
-
-
-
+        dispatch 
+          type: ACTIONS.FILTER_LOG
+       
+       
       catch e
+  getfilterLogBack:(e)->
+    query = QUERYLOG
+    (dispatch) =>
+      try
+        dispatch 
+          type: ACTIONS.FILTER_LOG_BACK
+        data = await client.request query,
+        {
+          before: e.cursor
+        }
+        dispatch 
+          type: ACTIONS.LOAD_DATA
+          payload: 
+            logs: _.get data, 'logs.edges'
+      catch e
+
   getSelector:()->
     query = """
 query{
@@ -120,8 +125,30 @@ query{
             command : command.logsCommands
 
       catch e
+  searchLog:({startDate, endDate, servername, username, command})->
+    query = QUERYLOG
+    (dispatch)=>
+      console.log startDate, endDate
+      try
+        search    = await client.request query,
+          {
+            filter:
+              servername: servername[0]
+              username: username[0]
+              command: command[0]
+              from: startDate
+              to: endDate
+              admin: true
+          }
+        dispatch 
+          type: ACTIONS.LOAD_DATA
+          payload:
+            logs: _.get search, 'logs.edges'
+
+      catch e
 
 export default (state=DEFAULT_STATE, {type, payload})->
+
   switch type
     when ACTIONS.LOAD_DATA
       _.extend {}, state, 
@@ -129,6 +156,8 @@ export default (state=DEFAULT_STATE, {type, payload})->
     when ACTIONS.SELECTOR
       _.extend {}, state,
         selector: payload
-
+    when ACTIONS.SEARCH
+      _.extend {}, state,
+        data: payload
     else
       state
