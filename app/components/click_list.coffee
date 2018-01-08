@@ -33,12 +33,13 @@ export default class ClickList extends Component
           me.list = instance
         }>
         {
-          for i in [0...Object.keys(me.data).length]
-            <option 
-              key={ me.keys[i] }
-              value={ me.items[i] }
-            >{ me.items[i] }
-            </option>
+          if me.props.data
+            for i in [0...Object.keys(me.props.data).length]
+              <option
+                key={ me.props.data[i] }
+                value={ me.props.data[i] }
+              >{ me.props.data[i] }
+              </option>
         }
       </select>
     </div>

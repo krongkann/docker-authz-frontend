@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
 import ClickList from './click_list'
+import { TYPES }            from '/app/ducks/permission'
 
 class ServernameSelector extends ClickList
 

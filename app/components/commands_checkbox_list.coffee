@@ -4,6 +4,7 @@ import { connect }          from 'react-redux'
 import { Checkbox, Button } from 'react-bootstrap'
 import { confirmAlert } from 'react-confirm-alert'
 import PermissionButtonsPanel from '/app/components/permission_buttons_panel'
+import { actions } from '/app/ducks/permission'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 class CommandsCheckboxList extends Component
@@ -12,49 +13,41 @@ class CommandsCheckboxList extends Component
   username = null
   servername = null
   form = null
-  listOnClick: (command, checked) ->
-    # servername = _.get store.getState(), "selectedServername", []
-    # username = _.get store.getState(), "selectedUsername", []
-    # confirmAlert
-    #   title: 'U sure?'
-    #   message: command + '\'s permission are going to be changed, are you sure?'
-    #   confirmLabel: 'Yes'
-    #   cancelLabel: 'No'
-    #   onConfirm: () ->
-    #     await toggleAllow username, servername, command, checked
-    #     getCommands(username, servername) store.dispatch
-    #   onCancel: () ->
-  
-
-
   componentWillMount: ->
-    me = @
     if @props.data
-      me.data = @props.data
+      @data = @props.data
     else
-      me.data = []
-  
-  # store.subscribe () ->
-  #   me.forceUpdate()
-  
+      @data = []
   
   render: ->
-    
+    me = @
     <div className='containervv'>
-      <PermissionButtonsPanel/>
-      
+      <PermissionButtonsPanel />
       <form className='containervv'>
         {
           checkboxs = []
-          _.each me.data, (allow, command) ->
+          _.each me.props.data, (allow, command) ->
             checkboxs.push <Checkbox
               key={ command }
               style={'fontSize': 13}
               checked={ me.data[command] }
               onChange={ (e) ->
-                me.listOnClick command, e.target.checked
+                checked = e.target.checked
+                if me.props.onClick
+                  confirmAlert
+                    title: 'U sure?'
+                    message: command + '\'s permission are going to be changed, are you sure?'
+                    confirmLabel: 'Yes'
+                    cancelLabel: 'No'
+                    onConfirm: () ->
+                      me.props.onClick
+                        checked: checked
+                        command: command
+                        username: me.props.selectedUsername
+                        servername: me.props.selectedServername
+                    onCancel: () ->
+                  
               }
-
               value={ command }
               className='item'
             >{ command }</Checkbox>
@@ -63,12 +56,16 @@ class CommandsCheckboxList extends Component
       </form>
       
     </div>
+
 mapDispatchToProps = (dispatch) ->
-  onClick: (value) ->
-    console.log 'I\'m like TT' + value
+  onClick: (params) ->
+    actions.changePermission(params) dispatch
 mapStateToProps = ({permission}) -> 
-  data: permission.commands
-export default connect(mapStateToProps, mapDispatchToProps)(CommandsCheckboxList)
+  return
+    data: permission.commands
+    selectedUsername: permission.selectedUsername
+    selectedServername: permission.selectedServername
+export default connect(mapStateToProps, mapDispatchToProps) CommandsCheckboxList
   
 
   
