@@ -5,7 +5,7 @@ import { Icon, Table,Menu } from 'semantic-ui-react'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
 import DataImage from '/app/components/DataImage'
-
+import Pagination from '/app/containers/Pagination'
 class  ImageTable extends Component
   constructor:(props)->
     super props 
@@ -35,7 +35,7 @@ class  ImageTable extends Component
         {
           table= []
           if data
-
+            console.log (last / data.length) ,"-=--=-="
             data[0..last].map (v,k)->
               cursor =  v.cursor
               table.push( <DataImage key={k} data={v.node} 
@@ -43,27 +43,9 @@ class  ImageTable extends Component
           table
         }
         </Table.Body>
-        <Table.Footer>
-          <Table.Row>
-            <Table.HeaderCell colSpan='12 '>
-              <Menu floated='right'   pagination>
-                <Menu.Item as='a' onClick={()-> 
-                      me.props.onBack(cursor)
-                      } icon>
-                  <Icon name='left chevron' />
-                  {" "}
-                    Back
-                </Menu.Item>
-                <Menu.Item as='a' onClick={()-> 
-                  
-                          me.props.onNext(cursor)} icon>
-                  Next
-                  <Icon name='right chevron' />
-                </Menu.Item>
-              </Menu>
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer>
+        <Pagination   onPageBack={()-> me.props.onBack(cursor)}
+                      cursor ={cursor}
+                      onPageNext={()-> me.props.onNext(cursor)} />
       </Table>
     </div>
 
