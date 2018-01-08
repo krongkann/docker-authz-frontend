@@ -1,0 +1,28 @@
+_self: &self 
+  source_dir: /home/tiramizu/Documents/Works
+
+_self_vars: &self_vars
+  PROD_USER:
+    NAME: tiramizu
+    UID: '1000'
+
+dev:
+  extend: {from: _common, group: dev}
+  <<: *self
+  conf:
+    app_port: 80
+    ql_port: 88
+    api_port: 89
+    api_net: dev
+  vars:
+    <<: *self_vars
+
+test:
+  extend: {from: _common, group: test}
+  <<: *self
+  conf:
+    api_port: 80
+
+  vars:
+    <<: *self_vars
+
