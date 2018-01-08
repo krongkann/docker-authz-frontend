@@ -1,9 +1,9 @@
-import { defineAction } from 'redux-define';
+import { defineAction } from 'redux-define'
 axios = require 'axios'
 
 DEFAULT_STATE = {}
 
-export TYPES = defineAction('LOGIN', ['LOGINGIN', 'SUCCESS','REMEMBER']) 
+export TYPES = defineAction('LOGIN', ['LOGINGIN', 'SUCCESS', 'REMEMBER']) 
 
 export actions = 
   doLogin: ({username, password})=>

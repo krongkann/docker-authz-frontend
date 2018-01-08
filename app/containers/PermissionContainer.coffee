@@ -1,16 +1,21 @@
-import React,{Component}               from 'react'
+import React, { Component }               from 'react'
 import { connect }                     from 'react-redux'
-import { ProgressBar }                 from 'react-bootstrap'
-axios = require 'axios'
-import { Button } from 'semantic-ui-react'
+import ServernameSelector              from '/app/components/servername_selector'
+import UsernameSelector                from '/app/components/username_selector'
+import CommandsCheckboxList            from '/app/components/commands_checkbox_list'
 
-
-
-class  PermissionContainer extends Component
+export default class  PermissionContainer extends Component
   render: ->
-    
-    <Button>Click Here</Button>
-    
+    <div style={
+      display: 'flex'
+      flexDirection: 'row'
+      alignItems: 'flex-start'
+      alignContent: 'stretch'
+      justifyContent: 'space-between'
+      flex: 1
+    }>
+      <ServernameSelector/>
+      <UsernameSelector/>
+      <CommandsCheckboxList/>
+    </div>
 
-
-export default connect()(PermissionContainer)
