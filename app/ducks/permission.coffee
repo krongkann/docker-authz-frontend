@@ -1,7 +1,7 @@
 import { defineAction } from 'redux-define'
 axios = require 'axios'
 
-DEFAULT_STATE = { servernames: ['gg', 'hh'], commands: { puppy: true } }
+DEFAULT_STATE = { servernames: ['gg', 'hh'], commands: { puppy: true }}
 
 export TYPES = defineAction('PERMISSSION',
   ['SET', 'SELECT_USERNAME', 'SELECT_SERVERNAME', 'CHANGE'])
@@ -10,9 +10,10 @@ export actions =
   fetch: () ->
     (dispatch) ->
       axios.defaults.baseURL =  '/permission'
-      servernames = [] #graphql
-      usernames = []
-      commands = []
+      servernames = ['jj'] #graphql
+      usernames = ['kk']
+      commands =
+        ll: false
       dispatch
         type: TYPES.SET
         payload: { servernames, usernames, commands }
@@ -23,8 +24,10 @@ export actions =
 export default (state = DEFAULT_STATE, action) ->
   switch action.type
     when TYPES.SET
-      _.extend {}, state, payload
+      _.extend {}, state, action.payload
     when TYPES.SELECT_SERVERNAME
-      _.extend {}, state, { selected_servername: payload }
+      _.extend {}, state, { selectedServername: action.payload }
+    when TYPES.SELECT_USERNAME
+      _.extend {}, state, { selectedUsername: action.payload }
     else
       state

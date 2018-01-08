@@ -21,7 +21,7 @@ mapDispatchToProps = (dispatch) ->
   onClick: (value) ->
     console.log 'trap\n\n\n\n\n\n' + value
     dispatch
-      type: TYPES.SELECT_SERVERNAME
+      type: TYPES.SELECT_USERNAME
       payload: value
 mapStateToProps = ({permission}) -> 
   data: permission.usernames
