@@ -17,9 +17,8 @@ class  LogTable extends Component
     w = window.innerWidth
     cursor = ""
     id = ""
-    first = 1
+    first = 0
     last = Math.floor((window.innerHeight - 600) / 46)
-    console.log me.props.pagination
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
@@ -40,7 +39,12 @@ class  LogTable extends Component
         {
           table= []
           if data
-            data[0..last].map (v,k)->
+            if me.props.pagination == 'back'
+              first_old = data.length - (2)
+              first_new = first_old - (last) 
+              first = (first_new - last)
+              last = first_new
+            data[first..last].map (v,k)->
               times  =  _.get v, 'node.createdAt' 
               time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
               unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
@@ -50,7 +54,6 @@ class  LogTable extends Component
                 v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
               
-
               table.push( <DataTable key={k} data={v.node} /> )
           table
 

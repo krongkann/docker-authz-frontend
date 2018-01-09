@@ -11,8 +11,8 @@ class  ImageContainer extends Component
       <ImageTable data={@props.imagedata}  
           onNext={@props.onNext} 
           onBack={@props.onBack} 
-          showModal={@props.showModal}/>
-  
+          showModal={@props.showModal}
+          pagination={@props.pagination} />
       <ShowModal />
       
     </div>
@@ -33,6 +33,7 @@ mapDispatchToProps = (dispatch) ->
 
 mapStateToProps = ({image})=>
   imagedata: image.images
+  pagination: image.page
   showModal: image.show
 
 export default connect(mapStateToProps,mapDispatchToProps)(ImageContainer)
