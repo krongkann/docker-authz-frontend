@@ -23,10 +23,11 @@ query($username: String, $servername: String){
   servernames
 }
       """
-      servernames = ['jj'] #graphql
-      usernames = ['kk']
-      commands =
-        ll: false
+      # result =
+      #   usernames: ['cc', 'aa']
+      #   servernames: ['dd', 'bb']
+      #   commands:
+      #     docker_ps: true
       result = client.request query,
         username: '1' #access state
         servername: '2'
@@ -35,9 +36,37 @@ query($username: String, $servername: String){
         payload: result
   changePermission: (params) ->
     (dispatch) ->
-      console.log 'trap ', params
+      mutation = """
+mutation($username: String, $servername: String, $command: String, $allow: Boolean){
+  updateUsercommand(username: $username , servername: $servername, allow: $allow, command: $command)
+}
+      """
+      result = client.request mutation, params
+      console.log 'trap ', @
   allowAll: (params) ->
+    (dispatch) ->
+      mutation = """
+mutation($username: String, $servername: String){
+  setAllowAll(username: $username , servername: $servername, allow: true) {
+    username
+    servername
+    allow
+  }
+}
+      """
+      await client.request mutation, params
   denyAll: (params) ->
+    (dispatch) ->
+      mutation = """
+mutation($username: String, $servername: String){
+  setAllowAll(username: $username , servername: $servername, allow: false) {
+    username
+    servername
+    allow
+  }
+}
+      """
+      await client.request mutation, params
 
 export default (state = DEFAULT_STATE, action) ->
   switch action.type
