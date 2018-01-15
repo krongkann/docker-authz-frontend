@@ -65,10 +65,6 @@ body > div,body > div > div,body > div > div > div.login-form {
 
 
 
-.ui.menu .active.item {
-  background: #21ba45;
-  color: rgba(0, 0, 0, 0.95);
-}
 
 .date-picker{
   display: block; 
