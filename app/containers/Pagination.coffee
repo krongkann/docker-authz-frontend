@@ -11,8 +11,8 @@ class  Pagination extends Component
     }
   render: ->
     me = @
-    disablednext =  ((_.get @, 'props.cursorend.endCursor') == me.props.cursor)
-    disabledback = (@state.page == 1 )
+    disablednext =  ((_.get @, 'props.cursorend.endCursor') == me.props.cursor) or !me.props.total
+    disabledback = (@state.page == 1)
     <Table.Footer>
       <Table.Row>
         <Table.HeaderCell colSpan='12 '>

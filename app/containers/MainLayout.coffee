@@ -23,10 +23,13 @@ class  MainLayout extends Component
     super props 
     @state = {
       activeItem: 'permission'
-      colorItem: 'white'
     }
 
-    
+  color:(color)->
+    if color
+      'red'
+    else
+      'white'
   render:( ) ->
     me = @
     activeItem = (_.get me, 'state.activeItem')
@@ -34,18 +37,18 @@ class  MainLayout extends Component
 
     <Router>
       <div>
-        <Menu  >
-          <Menu.Item name='permission'  active={activeItem is 'permission'}  as={Link} to='/permission'  
+        <Menu  onClick={()-> console.log "ff"}>
+          <Menu.Item name='permission'  active={activeItem is 'permission'} style={backgroundColor: me.color(activeItem is 'permission')} as={Link} to='/permission'  
               onClick={()->
                 me.props.onClick()
                 me.setState 
                   activeItem: 'permission' } />
-          <Menu.Item name='history log'   active={activeItem is 'history log'}  as={Link} to='/main'  
+          <Menu.Item name='historylog'   active={activeItem is 'historylog'} style={backgroundColor: me.color(activeItem is 'historylog')} as={Link} to='/main'  
             onClick={()->
                 me.props.onClick()
                 me.setState 
-                  activeItem: 'history log'}/>
-          <Menu.Item name='image'  active={activeItem is 'image'}  as={Link} to='/image'    
+                  activeItem: 'historylog'}/>
+          <Menu.Item name='image'  active={activeItem is 'image'} style={backgroundColor: me.color(activeItem is 'image')} as={Link} to='/image'    
             onClick={()->
                 me.props.onClick()
                 me.setState 
@@ -54,7 +57,7 @@ class  MainLayout extends Component
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
-            <Menu.Item name='logout'  active={activeItem is 'logout'}  as={Link} to='/logout' 
+            <Menu.Item name='logout'  style={backgroundColor: me.color(activeItem is 'logout')} active={activeItem is 'logout'}  as={Link} to='/logout' 
               onClick={()-> 
                 me.props.onClick()
                 me.setState 

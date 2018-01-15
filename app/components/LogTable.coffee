@@ -1,7 +1,7 @@
 
 import React,{Component} from 'react'
 import { connect }                    from 'react-redux'
-import { Icon, Table,Menu } from 'semantic-ui-react'
+import { Icon, Table,Menu, Label } from 'semantic-ui-react'
 import DataTable from '/app/components/DataTable'
 import Pagination from '/app/containers/Pagination'
 import moment              from 'moment'
@@ -9,8 +9,11 @@ import prettyMs            from 'pretty-ms'
 import Fullscreenable from 'react-fullscreenable'
 
 class  LogTable extends Component
-
-
+  test =
+    data:[
+      node: 
+        {id:1, username:'client', allow: true, servername: 'cc', command:'ps', request_method: 'get', createdAt: '2014-06-01T12:00:00Z'}
+    ]
   render:->
     me = @
     data = _.get me, 'props.data'
@@ -38,7 +41,9 @@ class  LogTable extends Component
           <Table.Body  >
         {
           table= []
+    
           if data
+           
             if me.props.pagination == 'back'
               first_old = data.length - (2)
               first_new = first_old - (last) 
@@ -55,6 +60,8 @@ class  LogTable extends Component
               cursor = v.cursor
               
               table.push( <DataTable key={k} data={v.node} /> )
+          else
+            table.push(<Label as='a' key={1} color='red' tag>not data</Label>)
           table
 
 
