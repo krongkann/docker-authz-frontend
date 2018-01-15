@@ -23,17 +23,42 @@ query($username: String, $servername: String){
   servernames
 }
       """
-      # result =
-      #   usernames: ['cc', 'aa']
-      #   servernames: ['dd', 'bb']
-      #   commands:
-      #     docker_ps: true
-      result = client.request query,
+      result = await client.request query,
         username: '1' #access state
         servername: '2'
+      if result.commands
+        result.commands = _.reduce result.commands, (set, member) ->
+          set[member.command] = member.allow
+          return set
+        , {}
       dispatch
         type: TYPES.SET
         payload: result
+
+  getCommands: (params) ->
+    (dispatch) ->
+      query = """
+query($username: String, $servername: String){
+  commands(username: $username,
+    servername: $servername){
+    command
+    allow
+  }
+}
+      """
+      result = await client.request query, params
+      if result.commands
+        result.commands = _.reduce result.commands, (set, member) ->
+          set[member.command] = member.allow
+          return set
+        , {}
+      result = _.extend result,
+        selectedUsername: params.username
+        selectedServername: params.servername
+      dispatch
+        type: TYPES.SET
+        payload: result
+
   changePermission: (params) ->
     (dispatch) ->
       mutation = """
@@ -43,6 +68,7 @@ mutation($username: String, $servername: String, $command: String, $allow: Boole
       """
       result = client.request mutation, params
       console.log 'trap ', @
+
   allowAll: (params) ->
     (dispatch) ->
       mutation = """
@@ -55,6 +81,7 @@ mutation($username: String, $servername: String){
 }
       """
       await client.request mutation, params
+
   denyAll: (params) ->
     (dispatch) ->
       mutation = """

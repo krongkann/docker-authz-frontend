@@ -2,4 +2,5 @@
 .docker-file*
 .compose*
 .tasks*
+.vscode
 app/semantic/dist

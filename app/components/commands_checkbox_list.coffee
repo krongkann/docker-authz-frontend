@@ -60,7 +60,7 @@ class CommandsCheckboxList extends Component
 mapDispatchToProps = (dispatch) ->
   onClick: (params) ->
     actions.changePermission(params) dispatch
-mapStateToProps = ({permission}) -> 
+mapStateToProps = ({ permission }) ->
   return
     data: permission.commands
     selectedUsername: permission.selectedUsername
