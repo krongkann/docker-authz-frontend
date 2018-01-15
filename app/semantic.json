@@ -15,6 +15,7 @@
     },
     "clean": "dist/"
   },
+<<<<<<< HEAD
   "permission": 744,
   "autoInstall": false,
   "rtl": false,
@@ -69,5 +70,10 @@
     "state",
     "visibility"
   ],
+=======
+  "permission": false,
+  "autoInstall": false,
+  "rtl": false,
+>>>>>>> 54769435e73b61edd7a8af5ab70529bac6a1a273
   "version": "2.2.13"
 }
