@@ -14,7 +14,11 @@ class  OptionTable extends Component
     super(props)
     @state = {
       btnOther: false
-      value:[]
+      servername: []
+      command: []
+      username:[]
+      startDate: {}
+      endDate: {}
     }
   componentWillMount: ->
     me = @
@@ -42,9 +46,8 @@ class  OptionTable extends Component
             server.push { text: v, key: k , value: v}
           <Dropdown upward placeholder='Server Name' item={false} id ='dropdown' fluid multiple search selection
             onAddItem={()-> console.log "dd"}
-            value={me.state.value}
+            value={me.state.servername}
             onChange={(e,{value})->
-              me.setState value: value
               me.setState servername: value}
               options={server } />
         }
@@ -53,8 +56,8 @@ class  OptionTable extends Component
           _.each (_.get select, 'user'), (v,k) ->
             user.push { text: v , key: k ,value: v}
           <Dropdown placeholder='User Name'  fluid multiple search selection
-            value={me.state.value}
-            onChange={(e,{value})->  
+            value={me.state.username}
+            onChange={(e,{value})->
               me.setState username: value}
               options={user} />
         }
@@ -65,9 +68,9 @@ class  OptionTable extends Component
           _.each (_.get select, 'command'), (v,k) ->
             command.push { text: v ,key: k,value: v}
           <Dropdown placeholder='Command' fluid multiple search selection
-            value={me.state.value}
+            value={me.state.command}
             className='item'
-            onChange={(e,{value})->  
+            onChange={(e,{value})->
               me.setState command: value}
               options={command } />
 
@@ -75,7 +78,6 @@ class  OptionTable extends Component
         {
           <DatePicker placeholderText="Date"
               selected={me.state.startDate}
-              value={me.state.startDate}
               className='date-picker' 
               dateFormat="DD/MM/YYYY"
               onChange={(date)->  me.setState startDate: date} />
@@ -83,7 +85,6 @@ class  OptionTable extends Component
         {
           <DatePicker placeholderText="To" className='date-picker' 
               selected={me.state.endDate}
-              value={me.state.endDate}
               dateFormat="DD/MM/YYYY"
               onChange={(date)->  me.setState endDate: date} 
              />
@@ -97,9 +98,9 @@ class  OptionTable extends Component
           <Button size='tiny'  color='olive' 
               onClick={()-> 
                 me.setState 
-                    startDate: ""
-                    endDate: ""
-                    value: []}>
+                  servername: []
+                  command: []
+                  username:[]}>
             Clear!
           </Button>
 
