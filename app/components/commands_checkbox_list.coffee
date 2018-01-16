@@ -14,10 +14,6 @@ class CommandsCheckboxList extends Component
   servername = null
   form = null
   componentWillMount: ->
-    if @props.data
-      @data = @props.data
-    else
-      @data = []
   
   render: ->
     me = @
@@ -30,7 +26,7 @@ class CommandsCheckboxList extends Component
             checkboxs.push <Checkbox
               key={ command }
               style={'fontSize': 13}
-              checked={ me.data[command] }
+              checked={ me.props.data[command] }
               onChange={ (e) ->
                 checked = e.target.checked
                 if me.props.onClick
@@ -41,7 +37,7 @@ class CommandsCheckboxList extends Component
                     cancelLabel: 'No'
                     onConfirm: () ->
                       me.props.onClick
-                        checked: checked
+                        allow: checked
                         command: command
                         username: me.props.selectedUsername
                         servername: me.props.selectedServername

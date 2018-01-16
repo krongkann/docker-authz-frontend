@@ -1,7 +1,7 @@
 import { defineAction } from 'redux-define'
 import { GraphQLClient, request }  from 'graphql-request'
 client = new GraphQLClient '/graphql' 
-axios = require 'axios'
+# axios = require 'axios'
 
 DEFAULT_STATE = { servernames: ['gg', 'hh'], commands: { puppy: true }}
 
@@ -9,23 +9,21 @@ export TYPES = defineAction('PERMISSSION',
   ['SET', 'SELECT_USERNAME', 'SELECT_SERVERNAME', 'CHANGE'])
 
 export actions =
-  fetch: () ->
+  fetch: (params) ->
     (dispatch) ->
-      axios.defaults.baseURL =  '/permission'
+      # axios.defaults.baseURL =  '/permission'
       query = """
-query($username: String, $servername: String){
-  commands(username: $username,
-    servername: $servername){
-    command
-    allow
-  }
-  usernames
-  servernames
-}
+        query($username: String, $servername: String){
+          commands(username: $username,
+            servername: $servername){
+            command
+            allow
+          }
+          usernames
+          servernames
+        }
       """
-      result = await client.request query,
-        username: '1' #access state
-        servername: '2'
+      result = await client.request query, params
       if result.commands
         result.commands = _.reduce result.commands, (set, member) ->
           set[member.command] = member.allow
@@ -38,13 +36,13 @@ query($username: String, $servername: String){
   getCommands: (params) ->
     (dispatch) ->
       query = """
-query($username: String, $servername: String){
-  commands(username: $username,
-    servername: $servername){
-    command
-    allow
-  }
-}
+        query($username: String, $servername: String){
+          commands(username: $username,
+            servername: $servername){
+            command
+            allow
+          }
+        }
       """
       result = await client.request query, params
       if result.commands
@@ -60,40 +58,47 @@ query($username: String, $servername: String){
         payload: result
 
   changePermission: (params) ->
+    me = @
     (dispatch) ->
       mutation = """
-mutation($username: String, $servername: String, $command: String, $allow: Boolean){
-  updateUsercommand(username: $username , servername: $servername, allow: $allow, command: $command)
-}
+        mutation($username: String, $servername: String, $command: String, $allow: Boolean){
+          updateUsercommand(username: $username , servername: $servername, allow: $allow, command: $command)
+        }
       """
-      result = client.request mutation, params
-      console.log 'trap ', @
+      result = await client.request mutation, params
+      me.fetch(params) dispatch
 
   allowAll: (params) ->
+    me = @
     (dispatch) ->
       mutation = """
-mutation($username: String, $servername: String){
-  setAllowAll(username: $username , servername: $servername, allow: true) {
-    username
-    servername
-    allow
-  }
-}
+        mutation($username: String, $servername: String){
+          setAllowAll(username: $username , servername: $servername, allow: true) {
+            username
+            servername
+            allow
+          }
+        }
       """
       await client.request mutation, params
+      me.fetch(params) dispatch
 
   denyAll: (params) ->
+    me = @
     (dispatch) ->
       mutation = """
-mutation($username: String, $servername: String){
-  setAllowAll(username: $username , servername: $servername, allow: false) {
-    username
-    servername
-    allow
-  }
-}
+        mutation($username: String, $servername: String){
+          setAllowAll(username: $username , servername: $servername, allow: false) {
+            username
+            servername
+            allow
+          }
+        }
       """
       await client.request mutation, params
+      me.fetch(params) dispatch
+
+actions.fetch()
 
 export default (state = DEFAULT_STATE, action) ->
   switch action.type
