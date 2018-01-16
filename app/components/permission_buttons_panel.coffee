@@ -16,7 +16,8 @@ class PermissionButtonsPanel extends Component
     <h4>Commands: 
       <div className='contanerhh'>
         <Button onClick={ () -> 
-          me.props.onRefreshClick() if me.props.onRefreshClick
+          if me.props.onRefreshClick
+            me.props.onRefreshClick me.props.selectedUsername, me.props.selectedServername
           } style={_.assign {}, buttonStyle, {background: '#444'}}>Refresh</Button>
         <Button onClick={ () ->
           if me.props.data
@@ -36,8 +37,9 @@ class PermissionButtonsPanel extends Component
               confirmLabel: 'Yes'
               cancelLabel: 'No'
               onConfirm: () ->
-                me.props.onAllowAllClick() if me.props.onAllowAllClick
-          } style={_.assign {}, buttonStyle, {background: '#0A0'}}>Allow All</Button>
+                if me.props.onAllowAllClick
+                  me.props.onAllowAllClick me.props.selectedUsername, me.props.selectedServername
+          } style={_.assign {}, buttonStyle, { background: '#0A0' }}>Allow All</Button>
         <Button onClick={ () ->
           if me.props.data
             filteredData = _.pickBy me.props.data, (e) -> e
@@ -58,18 +60,30 @@ class PermissionButtonsPanel extends Component
               confirmLabel: 'Yes'
               cancelLabel: 'No'
               onConfirm: () ->
-                me.props.onDenyAllClick() if me.props.onDenyAllClick
-          } style={_.assign {}, buttonStyle, {background: '#A00'}}>Deny All</Button>
+                if me.props.onDenyAllClick
+                  me.props.onDenyAllClick me.props.selectedUsername, me.props.selectedServername
+          } style={ _.assign {}, buttonStyle, { background: '#A00' } }>Deny All</Button>
       </div>
     </h4>
 mapDispatchToProps = (dispatch) ->
-  onRefreshClick: () ->
-    actions.fetch() dispatch
-  onAllowAllClick: () ->
-    console.log 'allow all'
-  onDenyAllClick: () ->
-    console.log 'deny all'
+  onRefreshClick: (selectedUsername, selectedServername) ->
+    actions.fetch(
+      servername: selectedServername
+      username: selectedUsername
+    ) dispatch
+  onAllowAllClick: (selectedUsername, selectedServername) ->
+    actions.allowAll(
+      servername: selectedServername
+      username: selectedUsername
+    ) dispatch
+  onDenyAllClick: (selectedUsername, selectedServername) ->
+    actions.denyAll(
+      servername: selectedServername
+      username: selectedUsername
+    ) dispatch
 mapStateToProps = ({permission}) -> 
   return
     data: permission.commands
+    selectedUsername: permission.selectedUsername
+    selectedServername: permission.selectedServername
 export default connect(mapStateToProps, mapDispatchToProps) PermissionButtonsPanel
