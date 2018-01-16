@@ -18,7 +18,7 @@ export default class ClickList extends Component
     me = @
     <div className='containervv'>
       <h4>{ me.header }</h4>
-      <select style={ fontSize: 15 } size={ 17 }
+      <select style={ fontSize: 15 } size={ Math.floor((window.innerHeight - 100) / 20) }
         onChange={ (event) ->
           me.listOnClick event.target.value
         }
