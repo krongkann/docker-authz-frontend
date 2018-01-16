@@ -49,16 +49,17 @@ class  LogTable extends Component
               first_new = first_old - (last) 
               first = (first_new - last)
               last = first_new
+            console.log first,"=======1"
+            console.log last, "l======"
             data[first..last].map (v,k)->
-              times  =  _.get v, 'node.createdAt' 
-              time = moment(_.get v, 'node.createdAt').utcOffset '+07:00'
-              unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD")== 0
-                times = time.format "YYYY-MM-DD HH:mm:ss"
+              times  =  _.get v, 'node.createdAt'
+              time = moment(times).utcOffset '+07:00'
+              if (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD") is not 0
+                times = moment(times).utcOffset('+07:00').format("YYYY-MM-DD")
                 v.node.createdAt = times
               else
                 v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
-              
               table.push( <DataTable key={k} data={v.node} /> )
           else
             table.push(<Label as='a' key={1} color='red' tag>not data</Label>)
