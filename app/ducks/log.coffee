@@ -146,7 +146,7 @@ query{
               command: command
               from: startDate
               to: endDate
-              admin: true
+              # admin: true
           }
         dispatch 
           type: ACTIONS.LOAD_DATA

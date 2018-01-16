@@ -17,8 +17,8 @@ class  OptionTable extends Component
       servername: []
       command: []
       username:[]
-      startDate: {}
-      endDate: {}
+      startDate: moment()
+      endDate: moment()
     }
   componentWillMount: ->
     me = @
@@ -44,8 +44,7 @@ class  OptionTable extends Component
           server = []
           _.each (_.get select, 'server'), (v,k) ->
             server.push { text: v, key: k , value: v}
-          <Dropdown upward placeholder='Server Name' item={false} id ='dropdown' fluid multiple search selection
-            onAddItem={()-> console.log "dd"}
+          <Dropdown  placeholder='Server Name' fluid multiple search selection
             value={me.state.servername}
             onChange={(e,{value})->
               me.setState servername: value}
@@ -83,8 +82,9 @@ class  OptionTable extends Component
               onChange={(date)->  me.setState startDate: date} />
         }
         {
-          <DatePicker placeholderText="To" className='date-picker' 
+          <DatePicker placeholderText="To"  
               selected={me.state.endDate}
+              className='date-picker'
               dateFormat="DD/MM/YYYY"
               onChange={(date)->  me.setState endDate: date} 
              />

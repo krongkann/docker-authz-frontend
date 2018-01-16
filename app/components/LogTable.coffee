@@ -22,6 +22,7 @@ class  LogTable extends Component
     id = ""
     first = 0
     last = Math.floor((window.innerHeight - 600) / 46)
+    console.log _.get me, 'props.total', last
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
@@ -49,8 +50,6 @@ class  LogTable extends Component
               first_new = first_old - (last) 
               first = (first_new - last)
               last = first_new
-            console.log first,"=======1"
-            console.log last, "l======"
             data[first..last].map (v,k)->
               times  =  _.get v, 'node.createdAt'
               time = moment(times).utcOffset '+07:00'
