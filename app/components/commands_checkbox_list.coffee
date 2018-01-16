@@ -54,6 +54,7 @@ class CommandsCheckboxList extends Component
     </div>
 
 mapDispatchToProps = (dispatch) ->
+  actions.fetch() dispatch
   onClick: (params) ->
     actions.changePermission(params) dispatch
 mapStateToProps = ({ permission }) ->

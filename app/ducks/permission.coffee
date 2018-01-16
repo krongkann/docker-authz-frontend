@@ -1,7 +1,6 @@
 import { defineAction } from 'redux-define'
 import { GraphQLClient, request }  from 'graphql-request'
-client = new GraphQLClient '/graphql' 
-# axios = require 'axios'
+client = new GraphQLClient '/graphql'
 
 DEFAULT_STATE = { servernames: ['gg', 'hh'], commands: { puppy: true }}
 
@@ -11,7 +10,6 @@ export TYPES = defineAction('PERMISSSION',
 export actions =
   fetch: (params) ->
     (dispatch) ->
-      # axios.defaults.baseURL =  '/permission'
       query = """
         query($username: String, $servername: String){
           commands(username: $username,
@@ -24,6 +22,12 @@ export actions =
         }
       """
       result = await client.request query, params
+      if result.usernames
+        result.usernames = _.sortBy result.usernames, (e) ->
+          e.toLowerCase()
+      if result.servernames
+        result.servernames = _.sortBy result.servernames, (e) ->
+          e.toLowerCase()
       if result.commands
         result.commands = _.reduce result.commands, (set, member) ->
           set[member.command] = member.allow
@@ -97,8 +101,6 @@ export actions =
       """
       await client.request mutation, params
       me.fetch(params) dispatch
-
-actions.fetch()
 
 export default (state = DEFAULT_STATE, action) ->
   switch action.type
