@@ -7,7 +7,7 @@ import '/app/assets/css/custom/triple_selector_form.css'
 
 export default class  PermissionContainer extends Component
   render: ->
-    <div className='containerhh'>
+    <div className='containerhh' style={'padding': '21px'}>
       <ServernameSelector/>
       <UsernameSelector/>
       <CommandsCheckboxList/>

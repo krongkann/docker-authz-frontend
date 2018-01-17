@@ -17,9 +17,12 @@ class CommandsCheckboxList extends Component
   
   render: ->
     me = @
-    <div className='containervv'>
+    <div className='containervv' style={ overflowY: 'scroll' }>
       <PermissionButtonsPanel />
-      <form className='containervv'>
+      <form  style={ 
+        height: window.innerHeight - 210
+        flexDirection: 'column'
+      }>
         {
           checkboxs = []
           _.each me.props.data, (allow, command) ->
@@ -54,6 +57,7 @@ class CommandsCheckboxList extends Component
     </div>
 
 mapDispatchToProps = (dispatch) ->
+  actions.fetch() dispatch
   onClick: (params) ->
     actions.changePermission(params) dispatch
 mapStateToProps = ({ permission }) ->
