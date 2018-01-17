@@ -12,7 +12,7 @@ class  ShowModal extends Component
 
   render:->
     me = @
-    <div>
+    <container>
       {
         if me.props.showModal
           <Modal size='tiny' open={me.props.showModal} onClose={@props.onCloseModal}>
@@ -30,13 +30,12 @@ class  ShowModal extends Component
               labelPosition='right' 
               onClick={()->   
                   me.props.onAllow(me.props.idImage)
-                  me.props.onCloseModal()
                 }
               content='Yes' />
             </Modal.Actions>
           </Modal>
       }
-    </div>
+    </container>
 
   
 mapStateToProps = ({image})=>
@@ -47,7 +46,8 @@ mapDispatchToProps = (dispatch) ->
     dispatch imageActions.closeModal()
   onAllow:(e)->
     dispatch imageActions.permissionImage(e)
-    dispatch imageActions.getAllImage()
+    
+    # dispatch imageActions.search({})
 
 
 

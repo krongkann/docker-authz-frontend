@@ -5,19 +5,15 @@ import { Icon, Table,Menu } from 'semantic-ui-react'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
 import DataImage from '/app/components/DataImage'
-import Pagination from '/app/containers/Pagination'
+import ImagePagination from '/app/containers/ImagePagination'
 class  ImageTable extends Component
-  constructor:(props)->
-    super props 
-    @state = {}
 
   render:->
     me = @
     data = _.get me, 'props.data'
     cursor = ""
     first = 0
-    last = Math.floor((window.innerHeight - 85) / 100)
-    console.log me.props.pagination
+    last = Math.floor((window.innerHeight - 85) / 300)
     <div className='table'>
       <Table   size='small'
               celled 
@@ -37,12 +33,11 @@ class  ImageTable extends Component
         {
           table= []
           if data
-            if me.props.pagination == 'back'
-              console.log "===="
-              first_old = data.length - (2)
-              first_new = first_old - (last) 
-              first = (first_new - last)
-              last = first_new
+            # if me.props.pagination == 'back'
+            #   first_old = data.length - (2)
+            #   first_new = first_old - (last) 
+            #   first = (first_new - last)
+            #   last = first_new
             data[first..last].map (v,k)->
               cursor =  v.cursor
               table.push( <DataImage key={k} data={v.node} 
@@ -50,9 +45,11 @@ class  ImageTable extends Component
           table
         }
         </Table.Body>
-        <Pagination   onPageBack={()-> me.props.onBack(cursor)}
-                      cursor ={cursor}
-                      onPageNext={()-> me.props.onNext(cursor)} />
+        <ImagePagination   
+            onPageBack={()-> me.props.onBack(cursor,(_.get me, 'props.search'))}
+            cursor ={cursor}
+            totals={_.get me, 'props.totalCount'}
+            onPageNext={()-> me.props.onNext(cursor, (_.get me, 'props.search'))} />
       </Table>
     </div>
 

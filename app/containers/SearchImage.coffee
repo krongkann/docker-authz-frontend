@@ -26,7 +26,7 @@ class  SearchImage extends Component
           server = []
           _.each (_.get me, 'props.selector'), (v,k) ->
             server.push { text: v.servername, key: k , value: v.servername}
-          <Dropdown upward placeholder='Server Name' fluid multiple search selection
+          <Dropdown  placeholder='Server Name' fluid multiple search selection
             onChange={(e,{value})->  
               me.setState servername: value}
               options={server } />

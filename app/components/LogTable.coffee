@@ -9,11 +9,7 @@ import prettyMs            from 'pretty-ms'
 import Fullscreenable from 'react-fullscreenable'
 
 class  LogTable extends Component
-  test =
-    data:[
-      node: 
-        {id:1, username:'client', allow: true, servername: 'cc', command:'ps', request_method: 'get', createdAt: '2014-06-01T12:00:00Z'}
-    ]
+
   render:->
     me = @
     data = _.get me, 'props.data'
@@ -22,7 +18,6 @@ class  LogTable extends Component
     id = ""
     first = 0
     last = Math.floor((window.innerHeight - 600) / 46)
-    console.log _.get me, 'props.total', last
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
@@ -67,9 +62,12 @@ class  LogTable extends Component
 
         }
         </Table.Body>
-        <Pagination   onPageBack={()-> me.props.onPageBack(cursor)}
+        <Pagination   onPageBack={()-> me.props.onPageBack(cursor, (_.get me, 'props.searchdata'))}
                       cursor ={cursor}
-                      onPageNext={()-> me.props.onPageNext(cursor)} />
+                      onClick={me.props.onClick}
+                      last={last}
+                      total={_.get me, 'props.total'}
+                      onPageNext={()-> me.props.onPageNext(cursor, (_.get me, 'props.searchdata'))} />
       </Table>
     </div>
 
