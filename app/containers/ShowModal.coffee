@@ -12,31 +12,25 @@ class  ShowModal extends Component
 
   render:->
     me = @
-    <container>
-      {
-        if me.props.showModal
-          <Modal size='tiny' open={me.props.showModal} onClose={@props.onCloseModal}>
-            <Modal.Header>
-              Change Your Permission
-            </Modal.Header>
-            <Modal.Content  size='tiny'>
-              <p>Are you sure you want to change your Permission</p>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button negative onClick={@props.onCloseModal}>
-                No
-              </Button>
-              <Button positive icon='checkmark' 
-              labelPosition='right' 
-              onClick={()->   
-                  me.props.onAllow(me.props.idImage)
-                }
-              content='Yes' />
-            </Modal.Actions>
-          </Modal>
-      }
-    </container>
-
+    <Modal  open={me.props.showModal} onClose={@props.onCloseModal}>
+      <Modal.Header>
+        Change Your Permission
+      </Modal.Header>
+      <Modal.Content>
+        <p>Are you sure you want to change your Permission</p>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button negative onClick={@props.onCloseModal}>
+          No
+        </Button>
+        <Button positive icon='checkmark' 
+        labelPosition='right' 
+        onClick={()->   
+            me.props.onAllow(me.props.idImage)
+          }
+        content='Yes' />
+      </Modal.Actions>
+    </Modal>
   
 mapStateToProps = ({image})=>
   showModal: image.show

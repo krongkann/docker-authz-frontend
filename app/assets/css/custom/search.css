@@ -12,6 +12,11 @@
 
 }
 
+
+.ui.modal {
+  width: 50%;
+  height: 20%;
+}
 .col-xs-6 {
   font-size: large;
 }

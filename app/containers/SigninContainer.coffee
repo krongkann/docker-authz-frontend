@@ -10,8 +10,9 @@ axios = require 'axios'
 
 class  SigninContainer extends Component
   componentWillReceiveProps: (nextprops)->
-    # if nextprops.loginSuccess
-    #   document.location = "/main"
+    console.log nextprops.loginSuccess.response
+    if _.get nextprops, 'loginSuccess.response'
+      document.location = "/main"
   render: ->
     
     <Login  onSubmit={@props.onSubmit} msg={@props.loginSuccess} />
