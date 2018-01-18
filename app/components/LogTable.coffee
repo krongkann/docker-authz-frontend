@@ -7,9 +7,7 @@ import Pagination from '/app/containers/Pagination'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
 import Fullscreenable from 'react-fullscreenable'
-
 class  LogTable extends Component
-
   render:->
     me = @
     data = _.get me, 'props.data'
@@ -37,29 +35,18 @@ class  LogTable extends Component
           <Table.Body  >
         {
           table= []
-    
           if data
-           
             if me.props.pagination == 'back'
               first_old = data.length - (2)
               first_new = first_old - (last) 
               first = (first_new - last)
               last = first_new
             data[first..last].map (v,k)->
-              times  =  _.get v, 'node.createdAt'
-              time = moment(times).utcOffset '+07:00'
-              if (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD") is not 0
-                times = moment(times).utcOffset('+07:00').format("YYYY-MM-DD")
-                v.node.createdAt = times
-              else
-                v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
               table.push( <DataTable key={k} data={v.node} /> )
           else
             table.push(<Label as='a' key={1} color='red' tag>not data</Label>)
           table
-
-
         }
         </Table.Body>
         <Pagination   onPageBack={()-> me.props.onPageBack(cursor, (_.get me, 'props.searchdata'))}
