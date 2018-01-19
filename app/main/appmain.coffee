@@ -13,12 +13,6 @@ import * as _ from 'lodash'
 
 
 class App extends Component
-
-  componentWillMount: (nextprops)->
-    @props.onclick()
-  componentWillReceiveProps:(nextProps)->
-    if nextProps.loginSuccess.response == false
-       document.location = "/signin"
   componentDidCatch: (error, info) ->
     alert error
    
@@ -27,11 +21,5 @@ class App extends Component
     <MainLayout />
 
 
-mapDispatchToProps= (dispatch) ->
-  onclick: ->
-    dispatch loginActions.checkLoing()
 
-mapStateToProps = ({login}) -> 
-  loginSuccess: _.get login, 'success'
-
-export default connect(mapStateToProps,mapDispatchToProps)(App)
+export default connect()(App)

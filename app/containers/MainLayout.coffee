@@ -22,8 +22,9 @@ class  MainLayout extends Component
       activeItem: 'permission'
     }
   componentWillReceiveProps: (nextprops)->
+    console.log nextprops.logouting.response
     if nextprops.logouting.response
-      document.location = "/signin"
+      document.location = "/login"
   color:(color)->
     if color
       'red'
@@ -65,18 +66,17 @@ class  MainLayout extends Component
             </Menu.Item>
             <Menu.Item name='logout'  
               style={backgroundColor: me.color(activeItem is 'logout')} 
-              # active={activeItem is 'logout1'}  as={Link} to='/signin1' 
+              active={activeItem is 'logout'}  as={Link} to='/logout' 
               onClick={()-> 
                 # me.props.onClick()
                 me.props.logout()
                 me.setState 
-                  activeItem: 'logoutq' } />
+                  activeItem: 'logout' } />
           </Menu.Menu>
         </Menu>
         <Route exact path="/main" component={PermissionContainer}/>
         <Route exact path="/historylog" component={LogContainer}/>
         <Route exact path="/image" component={ImageContainer}/>
-        <Route exact path="/signin" component={SigninContainer}/>
       </div>
     </Router>
 

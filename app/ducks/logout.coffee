@@ -9,7 +9,7 @@ export actions =
   doLogout: ()=>
     (dispatch) =>
 
-      axios.defaults.baseURL =  '/login'
+      axios.defaults.baseURL =  '/logout'
       try 
         dispatch 
           type: TYPES.LOGOUTING
@@ -17,7 +17,6 @@ export actions =
 
         response = await axios
           method: 'delete'
-        console.log "=====_.get(response, 'data.error') ", _.get(response, 'data.error') 
         dispatch
           type: TYPES.SUCCESS
           payload: 

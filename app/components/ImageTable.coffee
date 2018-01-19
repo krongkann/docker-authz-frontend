@@ -1,7 +1,7 @@
 
-import React,{Component} from 'react'
+import React, {Component} from 'react'
 import { connect }                    from 'react-redux'
-import { Icon, Table,Menu } from 'semantic-ui-react'
+import { Icon, Table, Menu, Label } from 'semantic-ui-react'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
 import DataImage from '/app/components/DataImage'
@@ -33,15 +33,14 @@ class  ImageTable extends Component
         {
           table= []
           if data
-            # if me.props.pagination == 'back'
-            #   first_old = data.length - (2)
-            #   first_new = first_old - (last) 
-            #   first = (first_new - last)
-            #   last = first_new
+            if data.length == 0
+              table.push(<Label as='a' key={1} color='red' tag>not data</Label>)
             data[first..last].map (v,k)->
               cursor =  v.cursor
               table.push( <DataImage key={k} data={v.node} 
-                showModal={ me.props.showModal}/> )
+                showModal={ me.props.showModal}/>)
+          else
+            table.push(<Label as='a' key={1} color='red' tag>not data</Label>) 
           table
         }
         </Table.Body>

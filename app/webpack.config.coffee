@@ -70,6 +70,8 @@ config =
         target: 'http://aboss-docker-authz-app'
       '/login':
         target: 'http://aboss-docker-authz-app'
+      '/logout':
+        target: 'http://aboss-docker-authz-app'
 
     port: SOCKET_PORT
     publicPath: '/build'
