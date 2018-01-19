@@ -4,11 +4,11 @@ import SigninContainer                 from '/app/containers/SigninContainer'
 import LogContainer                    from '/app/containers/LogContainer'
 import PermissionContainer             from '/app/containers/PermissionContainer'
 import ImageContainer                  from '/app/containers/ImageContainer'
-import { Input, Menu, Segment, Container, Icon } from 'semantic-ui-react'
-import { actions as pageActions }     from '/app/ducks/page'
-import { actions as logActions }      from '/app/ducks/log'
-import { actions as imageActions }      from '/app/ducks/image'
-import { actions as logoutActions }     from '/app/ducks/logout'
+import { Menu, Icon }                  from 'semantic-ui-react'
+import { actions as pageActions }      from '/app/ducks/page'
+import { actions as logActions }       from '/app/ducks/log'
+import { actions as imageActions }     from '/app/ducks/image'
+import { actions as logoutActions }    from '/app/ducks/logout'
 import { actions as loginActions }     from '/app/ducks/login'
 
 import {
@@ -66,7 +66,7 @@ class  MainLayout extends Component
           <Menu.Menu position='right'>
             <Menu.Item>
               <Icon circular name='spy' />
-              user : {me.props.username}
+              User : {me.props.username}
             </Menu.Item>
             <Menu.Item name='logout'  
               style={backgroundColor: me.color(activeItem is 'logout')} 
@@ -84,11 +84,9 @@ class  MainLayout extends Component
       </div>
     </Router>
 
-
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch pageActions.doSelectPage(@name)
-    # dispatch imageActions.getAllImage()
   oncheck: ->
     dispatch loginActions.checkLoing()
   logout:()->
@@ -98,11 +96,6 @@ mapStateToProps = ({page, logout, login}) ->
   activeItem: _.get page, 'activePage'
   logouting: logout.success
   
-
-
-
-
-
 export default connect(mapStateToProps, mapDispatchToProps )(MainLayout)
 
 

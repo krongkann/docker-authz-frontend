@@ -1,12 +1,11 @@
-import React,{Component}               from 'react'
-import { connect }                     from 'react-redux'
-import { ProgressBar }                 from 'react-bootstrap'
-import LogTable                        from '/app/components/LogTable'
-import OptionTable                        from '/app/components/OptionTable'
-import { actions as logActions }      from '/app/ducks/log'
-import { Header, Modal } from 'semantic-ui-react'
+import React,{Component}                from 'react'
+import { connect }                      from 'react-redux'
+import { ProgressBar }                  from 'react-bootstrap'
+import LogTable                         from '/app/components/LogTable'
+import OptionTable                      from '/app/components/OptionTable'
+import { actions as logActions }        from '/app/ducks/log'
+import { Header, Modal }                from 'semantic-ui-react'
 axios = require 'axios'
-
 
 class  LogContainer extends Component
 
@@ -21,9 +20,6 @@ class  LogContainer extends Component
                 pagination = {@props.pagination}
                 onPageBack={@props.onPageBack}/>
     </div>
-    
-
-
 
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->

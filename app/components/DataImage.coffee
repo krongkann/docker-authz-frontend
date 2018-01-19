@@ -1,6 +1,6 @@
-import React,{Component}   from 'react'
-import moment              from 'moment'
-import { Icon, Table,Button} from 'semantic-ui-react'
+import React,{ Component }      from 'react'
+import moment                 from 'moment'
+import { Icon, Table, Button }  from 'semantic-ui-react'
 class  DataImage extends Component
 
   render:->

@@ -1,8 +1,8 @@
-import React,{Component}               from 'react'
-import { connect }                     from 'react-redux'
-import ImageTable                        from '/app/components/ImageTable'
+import React,{Component}                from 'react'
+import { connect }                      from 'react-redux'
+import ImageTable                       from '/app/components/ImageTable'
 import { actions as imageActions }      from '/app/ducks/image'
-import { Icon, Table,Menu, Label } from 'semantic-ui-react'
+import { Icon, Table,Menu, Label }      from 'semantic-ui-react'
 class  ImagePagination extends Component
   
   render: ->
@@ -44,7 +44,6 @@ mapStateToProps = ({image})=>
   page: image.numberpage
 mapDispatchToProps = (dispatch) =>
   onClick:(me)->
-    console.log me
     dispatch imageActions.pageNumber(me)
 
 export default connect(mapStateToProps,mapDispatchToProps)(ImagePagination)

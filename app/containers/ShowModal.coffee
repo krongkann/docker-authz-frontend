@@ -44,9 +44,6 @@ mapDispatchToProps = (dispatch) ->
   onAllow:(e, username)->
     dispatch imageActions.permissionImage(e, username)
     
-    # dispatch imageActions.search({})
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowModal)
 

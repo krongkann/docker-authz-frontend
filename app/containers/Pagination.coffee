@@ -1,9 +1,9 @@
-import React,{Component}               from 'react'
-import { connect }                     from 'react-redux'
-import ImageTable                        from '/app/components/ImageTable'
+import React,{Component}                from 'react'
+import { connect }                      from 'react-redux'
+import ImageTable                       from '/app/components/ImageTable'
 import { actions as imageActions }      from '/app/ducks/image'
-import { Icon, Table,Menu, Label } from 'semantic-ui-react'
-import { actions as logActions }      from '/app/ducks/log'
+import { Icon, Table,Menu, Label }      from 'semantic-ui-react'
+import { actions as logActions }        from '/app/ducks/log'
 class  Pagination extends Component
   
   render: ->
@@ -40,16 +40,9 @@ class  Pagination extends Component
       </Table.Row>
     </Table.Footer>
     
-
-
-#edit page number
 mapDispatchToProps = (dispatch)=>
   onPageClick:(me)->
     dispatch logActions.pageNumber(me)
-
-
-  
-
 
 mapStateToProps = ({log})=>
   cursorend: log.endcursor

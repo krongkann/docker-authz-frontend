@@ -1,9 +1,9 @@
-import React,{Component}               from 'react'
-import { connect }                     from 'react-redux'
-import ImageTable                        from '/app/components/ImageTable'
+import React,{Component}                from 'react'
+import { connect }                      from 'react-redux'
+import ImageTable                       from '/app/components/ImageTable'
 import { actions as imageActions }      from '/app/ducks/image'
-import ShowModal from '/app/containers/ShowModal'
-import SearchImage from '/app/containers/SearchImage'
+import ShowModal                        from '/app/containers/ShowModal'
+import SearchImage                      from '/app/containers/SearchImage'
 class  ImageContainer extends Component
   render: ->
     <div className='table'>
@@ -16,13 +16,11 @@ class  ImageContainer extends Component
           totalCount={@props.total}
           pagination={@props.pagination} />
       <ShowModal />
-      
     </div>
     
 
 
 mapDispatchToProps = (dispatch) ->
-
   onClick:(key)->
     dispatch imageActions.search(key)
     dispatch imageActions.pageNumber(0)

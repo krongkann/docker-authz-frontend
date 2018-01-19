@@ -1,11 +1,11 @@
 
-import React, {Component} from 'react'
+import React, {Component}             from 'react'
 import { connect }                    from 'react-redux'
-import { Icon, Table, Menu, Label } from 'semantic-ui-react'
-import moment              from 'moment'
-import prettyMs            from 'pretty-ms'
-import DataImage from '/app/components/DataImage'
-import ImagePagination from '/app/containers/ImagePagination'
+import { Icon, Table, Menu, Label }   from 'semantic-ui-react'
+import moment                         from 'moment'
+import prettyMs                       from 'pretty-ms'
+import DataImage                      from '/app/components/DataImage'
+import ImagePagination                from '/app/containers/ImagePagination'
 class  ImageTable extends Component
 
   render:->

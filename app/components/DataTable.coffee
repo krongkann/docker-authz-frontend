@@ -1,7 +1,14 @@
 import React,{Component}   from 'react'
 import moment              from 'moment'
-import { Icon, Table,Menu, Button, Header, Image, Modal, List, Label} from 'semantic-ui-react'
 import prettyMs            from 'pretty-ms'
+import { Icon, 
+  Table, 
+  Button, 
+  Header, 
+  Modal, 
+  List, 
+  Label}                  from 'semantic-ui-react'
+
 class  DataTable extends Component
 
   render:->
