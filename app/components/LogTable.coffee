@@ -44,7 +44,6 @@ class  LogTable extends Component
             if data.length == 0
               table.push(<Label as='a' key={1} color='red' tag>not data</Label>)
             data[first..last].map (v,k)->
-              console.log "====-"
               cursor = v.cursor
               table.push( <DataTable key={k} data={v.node} /> )
           else

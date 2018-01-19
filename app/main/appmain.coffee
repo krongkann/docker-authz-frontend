@@ -14,22 +14,20 @@ import * as _ from 'lodash'
 
 class App extends Component
 
-  componentWillMount: ()->
-    @props.onclick()
+
  
   componentDidCatch: (error, info) ->
     alert error
    
   render: ->
     me = @
-    <MainLayout user={@props.username} />
+    <MainLayout  />
 
 
 mapDispatchToProps= (dispatch) ->
-  onclick: ->
-    dispatch loginActions.checkLoing()
+
 
 mapStateToProps = ({login}) ->
-  username: _.get login, 'loginSuccess.username'
+  
 
-export default connect(mapStateToProps,mapDispatchToProps)(App)
+export default connect()(App)

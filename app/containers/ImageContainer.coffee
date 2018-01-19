@@ -29,7 +29,6 @@ mapDispatchToProps = (dispatch) ->
   onNext:(e, search)->
     dispatch imageActions.getfilterImageNext(e, search)
   onBack:(e, search)->
-    console.log e,"=======key"
     dispatch imageActions.getfilterImageBack(e, search)
   showModal:(e)->
     dispatch imageActions.showModal(e)

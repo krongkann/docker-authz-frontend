@@ -9,6 +9,8 @@ import { actions as pageActions }     from '/app/ducks/page'
 import { actions as logActions }      from '/app/ducks/log'
 import { actions as imageActions }      from '/app/ducks/image'
 import { actions as logoutActions }     from '/app/ducks/logout'
+import { actions as loginActions }     from '/app/ducks/login'
+
 import {
   BrowserRouter as Router,
   Route,
@@ -21,9 +23,10 @@ class  MainLayout extends Component
     @state = {
       activeItem: 'permission'
     }
+  componentWillMount: ()->
+    @props.oncheck()
   componentWillReceiveProps: (nextprops)->
-    console.log nextprops.logouting.response
-    if nextprops.logouting.response
+    if _.get nextprops, 'logouting.response'
       document.location = "/"
   color:(color)->
     if color
@@ -63,7 +66,7 @@ class  MainLayout extends Component
           <Menu.Menu position='right'>
             <Menu.Item>
               <Icon circular name='spy' />
-              user : {me.props.user}
+              user : {me.props.username}
             </Menu.Item>
             <Menu.Item name='logout'  
               style={backgroundColor: me.color(activeItem is 'logout')} 
@@ -82,15 +85,16 @@ class  MainLayout extends Component
     </Router>
 
 
-
-
 mapDispatchToProps = (dispatch) ->
   onClick:(key)->
     dispatch pageActions.doSelectPage(@name)
     # dispatch imageActions.getAllImage()
+  oncheck: ->
+    dispatch loginActions.checkLoing()
   logout:()->
     dispatch logoutActions.doLogout()
-mapStateToProps = ({page, logout}) ->
+mapStateToProps = ({page, logout, login}) ->
+  username: _.get login, 'success.username'
   activeItem: _.get page, 'activePage'
   logouting: logout.success
   

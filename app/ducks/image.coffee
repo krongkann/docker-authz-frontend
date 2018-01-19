@@ -55,7 +55,7 @@ query($id: Int,
 """
 
 export actions = 
-  permissionImage: (id)-> 
+  permissionImage: (id, username)-> 
     query = """
 mutation($input: updateImagesInputType!){
   updateImage(input:$input ){
@@ -73,6 +73,7 @@ mutation($input: updateImagesInputType!){
           {
             input:
               id: id
+              username: username
           }
         dispatch 
           type: ACTIONS.CHANGE_ALLOW

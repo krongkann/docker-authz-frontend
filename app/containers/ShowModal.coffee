@@ -1,17 +1,19 @@
-import React,{Component}   from 'react'
-import moment              from 'moment'
-import { connect }                     from 'react-redux'
-import { Icon, Button, Modal} from 'semantic-ui-react'
+import React,{Component}                from 'react'
+import moment                           from 'moment'
+import { connect }                      from 'react-redux'
+import { Icon, Button, Modal}           from 'semantic-ui-react'
 import { actions as imageActions }      from '/app/ducks/image'
+import { actions as loginActions }      from '/app/ducks/login'
 class  ShowModal extends Component
   constructor:(props)->
-    super props 
+    super props
     @state = {
       open: false
     }
 
   render:->
     me = @
+    username = _.get me, 'props.username'
     <Modal  open={me.props.showModal} onClose={@props.onCloseModal}>
       <Modal.Header>
         Change Your Permission
@@ -26,20 +28,21 @@ class  ShowModal extends Component
         <Button positive icon='checkmark' 
         labelPosition='right' 
         onClick={()->   
-            me.props.onAllow(me.props.idImage)
+            me.props.onAllow(me.props.idImage, username)
           }
         content='Yes' />
       </Modal.Actions>
     </Modal>
   
-mapStateToProps = ({image})=>
+mapStateToProps = ({image, login})=>
   showModal: image.show
-  idImage: image.id 
+  idImage: image.id
+  username: _.get login, 'success.username'
 mapDispatchToProps = (dispatch) ->
   onCloseModal:(e)->
     dispatch imageActions.closeModal()
-  onAllow:(e)->
-    dispatch imageActions.permissionImage(e)
+  onAllow:(e, username)->
+    dispatch imageActions.permissionImage(e, username)
     
     # dispatch imageActions.search({})
 

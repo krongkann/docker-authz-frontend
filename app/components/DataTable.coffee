@@ -31,28 +31,32 @@ class  DataTable extends Component
             <Modal.Description>
             <List divided selection>
               <List.Item>
-                <Label color='red' horizontal><Icon name='user' /> servername</Label>
+                <Label color='red' horizontal><Icon name='user' /> Servername</Label>
                  {_.get me, 'props.data.username'}
               </List.Item>
               <List.Item>
-                <Label color='purple' horizontal><Icon name='server' />username</Label>
+                <Label color='orange' horizontal><Icon name='server' />Username</Label>
                  {_.get me, 'props.data.servername'}
               </List.Item>
               <List.Item>
-                <Label color='red' horizontal><Icon name='barcode' />command</Label>
+                <Label color='yellow' horizontal><Icon name='barcode' />Command</Label>
                 {_.get me, 'props.data.command'}
               </List.Item>
               <List.Item>
-                <Label color='purple' horizontal><Icon name='time' />time</Label>
+                <Label color='olive' horizontal><Icon name='time' />Method</Label>
                 {_.get me, 'props.data.request_method'}
               </List.Item>
               <List.Item>
-                <Label color='purple' horizontal><Icon name='time' />time</Label>
+                <Label color='green' horizontal><Icon name='time' />time</Label>
                 {_.get me, 'props.data.createdAt'}
               </List.Item>
               <List.Item>
-                <Label color='purple' horizontal><Icon name='checkmark box' />allow</Label>
+                <Label color='teal' horizontal><Icon name='checkmark box' />Allow</Label>
                 {(_.get me, 'props.data.allow').toString()}
+              </List.Item>
+              <List.Item>
+                <Label color='blue' horizontal><Icon name='user circle' />Admin</Label>
+                {(_.get me, 'props.data.activity')}
               </List.Item>
             </List>
               
