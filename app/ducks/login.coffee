@@ -27,7 +27,6 @@ export actions =
           type: TYPES.SUCCESS
           payload: 
             response: (if _.get(response, 'data.error') then false else true)
-            data: {username, password}
       catch e
         dispatch
           type: TYPES.SUCCESS
@@ -45,6 +44,7 @@ export actions =
         type: TYPES.SUCCESS
         payload: 
           response: (if _.get(response, 'data.error') then false else true)
+          username: response.data.username
     catch e
       dispatch
         type: TYPES.SUCCESS

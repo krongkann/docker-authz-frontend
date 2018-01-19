@@ -58,8 +58,6 @@ export actions =
     query = QUERYLOG
     (dispatch) =>
       try
-        console.log startDate, "=--=-"
-
         data = await client.request query,
         {
           filter:

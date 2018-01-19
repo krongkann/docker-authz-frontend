@@ -4,7 +4,7 @@ import SigninContainer                 from '/app/containers/SigninContainer'
 import LogContainer                    from '/app/containers/LogContainer'
 import PermissionContainer             from '/app/containers/PermissionContainer'
 import ImageContainer                  from '/app/containers/ImageContainer'
-import { Input, Menu, Segment, Container } from 'semantic-ui-react'
+import { Input, Menu, Segment, Container, Icon } from 'semantic-ui-react'
 import { actions as pageActions }     from '/app/ducks/page'
 import { actions as logActions }      from '/app/ducks/log'
 import { actions as imageActions }      from '/app/ducks/image'
@@ -24,7 +24,7 @@ class  MainLayout extends Component
   componentWillReceiveProps: (nextprops)->
     console.log nextprops.logouting.response
     if nextprops.logouting.response
-      document.location = "/login"
+      document.location = "/"
   color:(color)->
     if color
       'red'
@@ -62,7 +62,8 @@ class  MainLayout extends Component
                   activeItem: 'image'} />
           <Menu.Menu position='right'>
             <Menu.Item>
-              <Input icon='search' placeholder='Search...' />
+              <Icon circular name='spy' />
+              user : {me.props.user}
             </Menu.Item>
             <Menu.Item name='logout'  
               style={backgroundColor: me.color(activeItem is 'logout')} 
@@ -89,7 +90,7 @@ mapDispatchToProps = (dispatch) ->
     # dispatch imageActions.getAllImage()
   logout:()->
     dispatch logoutActions.doLogout()
-mapStateToProps = ({page, login, logout}) -> 
+mapStateToProps = ({page, logout}) ->
   activeItem: _.get page, 'activePage'
   logouting: logout.success
   
