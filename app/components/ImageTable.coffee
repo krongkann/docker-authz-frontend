@@ -13,7 +13,7 @@ class  ImageTable extends Component
     data = _.get me, 'props.data'
     cursor = ""
     first = 0
-    last = Math.floor((window.innerHeight - 85) / 300)
+    last = Math.floor((window.innerHeight - 100 ) / 120)
     <div className='table'>
       <Table   size='small'
               celled 

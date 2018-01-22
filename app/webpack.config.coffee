@@ -88,7 +88,7 @@ config =
 
 
 unless process.env.NODE_ENV == 'production'
-  config.entry.login = [
+  config.entry.signin = [
     'babel-polyfill'
     'react-hot-loader/patch'
     "webpack-dev-server/client?http://0.0.0.0:#{SOCKET_PORT}"

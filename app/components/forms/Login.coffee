@@ -42,7 +42,6 @@ class Login extends Component
                 type='password'
                 onChange={(e)-> me.setState password: e.target.value}
               />
-
               <Button color='blue' fluid size='large' disabled={isSubmitButtonDisable}  >Login</Button>
             </Segment>
           </Form>

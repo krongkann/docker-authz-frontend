@@ -4,13 +4,13 @@ import SigninContainer                 from '/app/containers/SigninContainer'
 import LogContainer                    from '/app/containers/LogContainer'
 import PermissionContainer             from '/app/containers/PermissionContainer'
 import ImageContainer                  from '/app/containers/ImageContainer'
-import { Menu, Icon }                  from 'semantic-ui-react'
+import { Menu, Icon, Image }           from 'semantic-ui-react'
 import { actions as pageActions }      from '/app/ducks/page'
 import { actions as logActions }       from '/app/ducks/log'
 import { actions as imageActions }     from '/app/ducks/image'
 import { actions as logoutActions }    from '/app/ducks/logout'
 import { actions as loginActions }     from '/app/ducks/login'
-
+import logo                            from "/app/assets/img/logo.png"
 import {
   BrowserRouter as Router,
   Route,
@@ -33,12 +33,21 @@ class  MainLayout extends Component
       'red'
     else
       'white'
+
   render:( ) ->
     me = @
     activeItem = (_.get me, 'state.activeItem')
     <Router>
       <div>
         <Menu  >
+          <Image
+            size='mini'
+            src={logo}
+            style={{ 
+            width: '120px'
+            height: '50px'
+            marginRight: '1.5em' }}
+          />
           <Menu.Item name='permission'  
               active={activeItem is 'permission'} 
               style={backgroundColor: me.color(activeItem is 'permission')} 
@@ -66,7 +75,7 @@ class  MainLayout extends Component
           <Menu.Menu position='right'>
             <Menu.Item>
               <Icon circular name='spy' />
-              User : {me.props.username}
+              Name : {me.props.username}
             </Menu.Item>
             <Menu.Item name='logout'  
               style={backgroundColor: me.color(activeItem is 'logout')} 
