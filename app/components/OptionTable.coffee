@@ -6,6 +6,7 @@ import { Dropdown, Label, Select, Grid, Button, Menu, Input, Header, Checkbox } 
 import MenuOption from '/app/components/MenuOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import fileDownload from 'js-file-download'
 
 
 class  OptionTable extends Component
@@ -23,7 +24,13 @@ class  OptionTable extends Component
   componentWillMount: ->
     me = @
 
-    
+  httpGet = (theUrl, callback) ->
+    xmlHttp = new XMLHttpRequest()
+    xmlHttp.onreadystatechange = () ->
+      if xmlHttp.readyState == 4 && xmlHttp.status == 200
+        callback xmlHttp.responseText
+    xmlHttp.open "GET", theUrl, true
+    xmlHttp.send null
 
   render:->
     me = @
@@ -92,8 +99,16 @@ class  OptionTable extends Component
         </Grid.Column>
         
         <Grid.Row>
-          <Button size='tiny'  color='blue'>Export PDF</Button>
-          <Button size='tiny' color='teal'>Export CSV</Button>
+          <Button size='tiny'  color='blue' onClick={ () ->
+            httpGet '/download_pdf', (res) ->
+              console.log res.charAt 0
+              fileDownload res, 'test.pdf'
+          }>Export PDF</Button>
+          <Button size='tiny' color='teal' onClick={ () ->
+            httpGet '/download_csv', (res) ->
+              fileDownload res, 'test.csv'
+
+          }>Export CSV</Button>
           <Button size='tiny'  positive onClick={()-> me.props.onClick me.state } >Search !</Button>
           <Button size='tiny'  color='olive' 
               onClick={()-> 
