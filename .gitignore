@@ -4,3 +4,8 @@
 .tasks*
 .vscode
 app/semantic/dist
+app/build/login.bundle.js
+app/build/main.bundle.js
+app/build/signin.bundle.js
+app/webpack.config.coffee
+app/build/index.html

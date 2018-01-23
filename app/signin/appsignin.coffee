@@ -14,19 +14,15 @@ import thunk                            from 'redux-thunk'
 import reducer                          from '/app/ducks'
 import { composeWithDevTools }          from 'redux-devtools-extension'
 import SigninContainer                   from '/app/containers/SigninContainer'
+import { connect }                     from 'react-redux'
 
 import * as _ from 'lodash'
-export default class AppSignin extends Component
-  
-  middleware = applyMiddleware(promiseMiddleware(), thunk, createLogger())
-  store = createStore(reducer, {},composeWithDevTools(middleware))
+class AppSignin extends Component
 
-  
   componentDidCatch: (error, info) ->
     alert error
    
   render: ->
-    <Provider store={store}>
-      <SigninContainer />
-    </Provider>
+    <SigninContainer />
 
+export default  connect()(AppSignin)

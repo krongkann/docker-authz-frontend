@@ -3,14 +3,15 @@ import { GraphQLClient, request }  from 'graphql-request'
 client = new GraphQLClient '/graphql' 
 axios = require 'axios'
 
-DEFAULT_STATE = {}
+DEFAULT_STATE = {numberpage: 1}
 
 export ACTIONS = defineAction('LOG', ['LOAD_DATA', 
                                       'SUCCESS', 
                                       'FILTER_LOG', 
                                       'SELECTOR', 
                                       'SEARCH', 
-                                      'FILTER_LOG_BACK']) 
+                                      'FILTER_LOG_BACK',
+                                      'PAGE_NUMBER']) 
 QUERYLOG = 
   """
 query($after: String, $before: String, $filter: LogsFilter, $first: Int){
@@ -47,29 +48,24 @@ query($after: String, $before: String, $filter: LogsFilter, $first: Int){
 }
 """
 export actions = 
-  getLog: (servername)=>
-    query = QUERYLOG
-    (dispatch) =>
-      try
-        data = await client.request query
-        dispatch 
-          type: ACTIONS.LOAD_DATA
-          payload: 
-            logs: _.get data, 'logs.edges'
-            total: _.get data, 'logs.totalCount'
-            endcursor: _.get data, 'logs.pageInfo'
-        dispatch 
-          type: ACTIONS.SUCCESS
-          payload: true
+  pageNumber:(me) -> (dispatch) ->
+    dispatch 
+      type: ACTIONS.PAGE_NUMBER
+      payload:
+        page: me
 
-
-      catch e
-  getfilterLogNext:(cursor)->
+  getfilterLogNext:(cursor, {startDate, endDate, servername, username, command})->
     query = QUERYLOG
     (dispatch) =>
       try
         data = await client.request query,
         {
+          filter:
+            servername: servername
+            username: username
+            command: command
+            from: startDate
+            to: endDate
           after: cursor
         }
         dispatch 
@@ -84,14 +80,18 @@ export actions =
        
        
       catch e
-  getfilterLogBack:(cursor)->
+  getfilterLogBack:(cursor, {startDate, endDate, servername, username, command})->
     query = QUERYLOG
     (dispatch) =>
       try
-        console.log "currrsorrrr", cursor
-
         data = await client.request query,
         {
+          filter:
+            servername: servername
+            username: username
+            command: command
+            from: startDate
+            to: endDate
           before: cursor
         }
         dispatch 
@@ -132,6 +132,7 @@ query{
             server : server.logsServernames
             user   : user.logsUsernames
             command : command.logsCommands
+            page: 1
 
       catch e
   searchLog:({startDate, endDate, servername, username, command})->
@@ -146,17 +147,28 @@ query{
               command: command
               from: startDate
               to: endDate
+
               # admin: true
           }
         dispatch 
           type: ACTIONS.LOAD_DATA
           payload:
+            total: _.get search, 'logs.totalCount'
             logs: _.get search, 'logs.edges'
+            endcursor: _.get search, 'logs.pageInfo'
+        dispatch
+          type: ACTIONS.SEARCH
+          payload:
+            filter:
+              servername: servername
+              username: username
+              command: command
+              from: startDate
+              to: endDate
 
       catch e
 
 export default (state=DEFAULT_STATE, {type, payload})->
-
   switch type
     when ACTIONS.LOAD_DATA
       _.extend {}, state, 
@@ -166,11 +178,18 @@ export default (state=DEFAULT_STATE, {type, payload})->
     when ACTIONS.SELECTOR
       _.extend {}, state,
         selector: payload
+        page: payload.page
     when ACTIONS.SEARCH
       _.extend {}, state,
-        data: payload
+        data: payload.filter
     when ACTIONS.FILTER_LOG
       _.extend {}, state,
         page: payload
+    when ACTIONS.PAGE_NUMBER
+      _.extend {}, state,
+        if payload.page == 0
+          numberpage: 1
+        else
+          numberpage: (state.numberpage + payload.page) 
     else
       state

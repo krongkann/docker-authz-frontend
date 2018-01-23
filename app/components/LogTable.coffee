@@ -7,13 +7,7 @@ import Pagination from '/app/containers/Pagination'
 import moment              from 'moment'
 import prettyMs            from 'pretty-ms'
 import Fullscreenable from 'react-fullscreenable'
-
 class  LogTable extends Component
-  test =
-    data:[
-      node: 
-        {id:1, username:'client', allow: true, servername: 'cc', command:'ps', request_method: 'get', createdAt: '2014-06-01T12:00:00Z'}
-    ]
   render:->
     me = @
     data = _.get me, 'props.data'
@@ -22,7 +16,6 @@ class  LogTable extends Component
     id = ""
     first = 0
     last = Math.floor((window.innerHeight - 600) / 46)
-    console.log _.get me, 'props.total', last
     <div className='table'  style={height: '20px'} >
       <Table   size='small'
               celled 
@@ -42,34 +35,28 @@ class  LogTable extends Component
           <Table.Body  >
         {
           table= []
-    
           if data
-           
             if me.props.pagination == 'back'
               first_old = data.length - (2)
               first_new = first_old - (last) 
               first = (first_new - last)
               last = first_new
+            if data.length == 0
+              table.push(<Label as='a' key={1} color='red' tag>not data</Label>)
             data[first..last].map (v,k)->
-              times  =  _.get v, 'node.createdAt'
-              time = moment(times).utcOffset '+07:00'
-              if (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD") is not 0
-                times = moment(times).utcOffset('+07:00').format("YYYY-MM-DD")
-                v.node.createdAt = times
-              else
-                v.node.createdAt  = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
               cursor = v.cursor
               table.push( <DataTable key={k} data={v.node} /> )
           else
             table.push(<Label as='a' key={1} color='red' tag>not data</Label>)
           table
-
-
         }
         </Table.Body>
-        <Pagination   onPageBack={()-> me.props.onPageBack(cursor)}
+        <Pagination   onPageBack={()-> me.props.onPageBack(cursor, (_.get me, 'props.searchdata'))}
                       cursor ={cursor}
-                      onPageNext={()-> me.props.onPageNext(cursor)} />
+                      onClick={me.props.onClick}
+                      last={last}
+                      total={_.get me, 'props.total'}
+                      onPageNext={()-> me.props.onPageNext(cursor, (_.get me, 'props.searchdata'))} />
       </Table>
     </div>
 

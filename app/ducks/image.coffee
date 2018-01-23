@@ -4,7 +4,7 @@ import { ACTIONS as systemActionTypes }                     from './system'
 client = new GraphQLClient '/graphql' 
 axios = require 'axios'
 
-DEFAULT_STATE = {}
+DEFAULT_STATE = {numberpage: 1}
 
 export ACTIONS = defineAction('IMAGE', ['RECEIVE_IMAGES', 
                                         'SHOW_MODAL', 
@@ -13,7 +13,8 @@ export ACTIONS = defineAction('IMAGE', ['RECEIVE_IMAGES',
                                         'CHANGE_ALLOW',
                                         'SEARCH_SERVER'
                                         'SEARCH_IMAGE',
-                                        'PAGE_SELECT',]) 
+                                        'PAGE_SELECT',
+                                        'PAGE_NUMBER']) 
 QUERY = """
 query($id: Int, 
       $servername: [String],
@@ -41,34 +42,72 @@ query($id: Int,
       }
       cursor
     }
-   
+    pageInfo{
+      endCursor
+    }
     sortServername {
       servername
     }
+    totalCount
   }
 }
 
 """
 
 export actions = 
-  getAllImage: (servername)=>
-    query = QUERY
-    (dispatch) =>
-      try
-        data = await client.request query
+  permissionImage: (id, username)-> 
+    query = """
+mutation($input: updateImagesInputType!){
+  updateImage(input:$input ){
+    servername
+    repository_name
+    id
+    allow
+  }
+}
+ """ 
+    queryimages = QUERY
+    (dispatch)->
+      if id 
+        data = await client.request query,
+          {
+            input:
+              id: id
+              username: username
+          }
+        dispatch 
+          type: ACTIONS.CHANGE_ALLOW
+          payload: 
+              id: id
+              allow: _.get data, 'updateImage.allow'
+              message: 'permission pass'
+
+        data = await client.request queryimages,
+        {
+          servername: name.servername
+        }
         dispatch 
           type: ACTIONS.RECEIVE_IMAGES
           payload: 
             images: _.get data, 'images.edges'
             selectorImage:  _.get data, 'images.sortServername'
-
-
-      catch e
+            total: _.get data, 'images.totalCount'
+            endcursor: _.get data, 'images.pageInfo'
+            search:
+              servername: name.servername
         dispatch
-          type: systemActionTypes.SHOW_NOTIFY
+          type: ACTIONS.CLOSE_MODAL
+
+      else
+        dispatch 
+          type: ACTIONS.CHANGE_ALLOW
           payload: 
-            type: 'error'
-            message: e.message
+            message: 'permission fail'
+  pageNumber:(me) -> (dispatch) ->
+    dispatch 
+      type: ACTIONS.PAGE_NUMBER
+      payload:
+        page: me
 
         
   showModal: (id)=> 
@@ -90,18 +129,23 @@ export actions =
         payload: 
           images: _.get data, 'images.edges'
           selectorImage:  _.get data, 'images.sortServername'
+          total: _.get data, 'images.totalCount'
+          endcursor: _.get data, 'images.pageInfo'
+          search:
+            servername: name.servername
     catch e
       dispatch
         type: systemActionTypes.SHOW_NOTIFY
         payload: 
           type: 'error'
           message: e.message
-  getfilterImageNext:(cursor)->
+  getfilterImageNext:(cursor,name)->
     query = QUERY
     (dispatch) =>
       try
         data = await client.request query,
         {
+          servername: name.servername
           after: cursor
         }
         dispatch 
@@ -109,67 +153,51 @@ export actions =
           payload: 
             images: _.get data, 'images.edges'
             selectorImage:  _.get data, 'images.sortServername'
+            total: _.get data, 'images.totalCount'
+            endcursor: _.get data, 'images.pageInfo'
+            search:
+              servername: name.servername
         dispatch 
           type: ACTIONS.PAGE_SELECT
           payload: 'next'
        
        
       catch e
-  getfilterImageBack:(e)->
+  getfilterImageBack:(cursor, name) =>
     query = QUERY
     (dispatch) =>
       try
-        dispatch 
-          type: ACTIONS.PAGE_SELECT
-          payload: 'back'
         data = await client.request query,
         {
-          before: e.cursor
+          servername: name.servername
+          before: cursor
         }
         dispatch 
           type: ACTIONS.RECEIVE_IMAGES
           payload: 
             images: _.get data, 'images.edges'
             selectorImage:  _.get data, 'images.sortServername'
+            total: _.get data, 'images.totalCount'
+            endcursor: _.get data, 'images.pageInfo'
+            search:
+              servername: name.servername
+        dispatch 
+          type: ACTIONS.PAGE_SELECT
+          payload: 'back'
+        
       catch e
 
-  permissionImage: (id)-> 
-    query = """
-mutation($input: updateImagesInputType!){
-  updateImage(input:$input ){
-    servername
-    repository_name
-    id
-    allow
-  }
-}
- """ 
-    (dispatch)->
-      if id 
-        data = await client.request query,
-          {
-            input:
-              id: id
-          }
-        dispatch 
-          type: ACTIONS.CHANGE_ALLOW
-          payload: 
-              id: id
-              allow: _.get data, 'updateImage.allow'
-              message: 'permission pass'
-
-      else
-        dispatch 
-          type: ACTIONS.CHANGE_ALLOW
-          payload: 
-            message: 'permission fail'
+ 
 
 
 export default (state=DEFAULT_STATE, {type, payload})->
   switch type
     when ACTIONS.RECEIVE_IMAGES
       _.extend {}, state, 
-        images: payload.images 
+        images: payload.images
+        total: payload.total
+        search: payload.search
+        endcursor: payload.endcursor
         selectorImage: payload.selectorImage
 
     when ACTIONS.SORTIMAGE 
@@ -187,6 +215,12 @@ export default (state=DEFAULT_STATE, {type, payload})->
     when ACTIONS.PAGE_SELECT
       _.extend {}, state,
         page: payload
+    when ACTIONS.PAGE_NUMBER
+      _.extend {}, state,
+        if payload.page == 0
+          numberpage: 1
+        else
+          numberpage: (state.numberpage + payload.page) 
 
     when ACTIONS.CHANGE_ALLOW
       _.extend {}, state,

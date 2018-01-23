@@ -27,11 +27,28 @@ export actions =
           type: TYPES.SUCCESS
           payload: 
             response: (if _.get(response, 'data.error') then false else true)
-            data: {username, password}
       catch e
         dispatch
           type: TYPES.SUCCESS
           payload: false
+  checkLoing:()=> (dispatch)=>
+    axios.defaults.baseURL =  '/login'
+    try 
+      dispatch 
+        type: TYPES.LOGINGIN
+        payload: true
+
+      response = await axios
+        method: 'get'
+      dispatch
+        type: TYPES.SUCCESS
+        payload: 
+          response: (if _.get(response, 'data.error') then false else true)
+          username: response.data.username
+    catch e
+      dispatch
+        type: TYPES.SUCCESS
+        payload: false
 
 
 export default (state=DEFAULT_STATE, {type, payload})->
