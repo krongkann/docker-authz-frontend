@@ -24,13 +24,14 @@ class  OptionTable extends Component
   componentWillMount: ->
     me = @
 
-  httpGet = (theUrl, callback) ->
+  httpPost = (theUrl, filters, callback) ->
     xmlHttp = new XMLHttpRequest()
     xmlHttp.onreadystatechange = () ->
       if xmlHttp.readyState == 4 && xmlHttp.status == 200
         callback xmlHttp.responseText
-    xmlHttp.open "GET", theUrl, true
-    xmlHttp.send null
+    xmlHttp.open "POST", theUrl, true
+    xmlHttp.setRequestHeader "Content-type", "application/json"
+    xmlHttp.send JSON.stringify { filters }
 
   render:->
     me = @
@@ -100,12 +101,12 @@ class  OptionTable extends Component
         
         <Grid.Row>
           <Button size='tiny'  color='blue' onClick={ () ->
-            httpGet '/download_pdf', (res) ->
+            httpPost '/download_pdf', {username: 'krongkan1'}, (res) ->
               console.log res.charAt 0
               fileDownload res, 'test.pdf'
           }>Export PDF</Button>
           <Button size='tiny' color='teal' onClick={ () ->
-            httpGet '/download_csv', (res) ->
+            httpPost '/download_csv', {command: 'docker_exec'}, (res) ->
               fileDownload res, 'test.csv'
 
           }>Export CSV</Button>
