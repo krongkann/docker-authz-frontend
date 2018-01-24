@@ -102,8 +102,8 @@ class  OptionTable extends Component
         <Grid.Row>
           <Button size='tiny'  color='blue' onClick={ () ->
             httpPost '/download_pdf', {username: 'krongkan1'}, (res) ->
-              console.log res.charAt 0
-              fileDownload res, 'test.pdf'
+              hash = JSON.parse(res).hash
+              aWindow = window.open "/download_pdf/#{hash}", 'Meow~'
           }>Export PDF</Button>
           <Button size='tiny' color='teal' onClick={ () ->
             httpPost '/download_csv', {command: 'docker_exec'}, (res) ->
@@ -112,7 +112,7 @@ class  OptionTable extends Component
           }>Export CSV</Button>
           <Button size='tiny'  positive onClick={()-> me.props.onClick me.state } >Search !</Button>
           <Button size='tiny'  color='olive' 
-              onClick={()-> 
+              onClick={()->
                 me.setState 
                   servername: []
                   command: []
