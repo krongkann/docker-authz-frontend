@@ -104,6 +104,7 @@ class  OptionTable extends Component
             httpPost '/download_pdf', {username: 'krongkan1'}, (res) ->
               hash = JSON.parse(res).hash
               aWindow = window.open "/download_pdf/#{hash}", 'Meow~'
+              aWindow.close()
           }>Export PDF</Button>
           <Button size='tiny' color='teal' onClick={ () ->
             httpPost '/download_csv', {command: 'docker_exec'}, (res) ->
