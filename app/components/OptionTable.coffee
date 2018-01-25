@@ -101,13 +101,13 @@ class  OptionTable extends Component
         
         <Grid.Row>
           <Button size='tiny'  color='blue' onClick={ () ->
-            httpPost '/download_pdf', {username: 'krongkan1'}, (res) ->
+            httpPost '/download_pdf', {}, (res) ->
               hash = JSON.parse(res).hash
               aWindow = window.open "/download_pdf/#{hash}", 'Meow~'
               aWindow.close()
           }>Export PDF</Button>
           <Button size='tiny' color='teal' onClick={ () ->
-            httpPost '/download_csv', {command: 'docker_exec'}, (res) ->
+            httpPost '/download_csv', {}, (res) ->
               fileDownload res, 'test.csv'
 
           }>Export CSV</Button>
