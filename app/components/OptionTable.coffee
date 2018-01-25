@@ -6,7 +6,6 @@ import { Dropdown, Label, Select, Grid, Button, Menu, Input, Header, Checkbox } 
 import MenuOption from '/app/components/MenuOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import fileDownload from 'js-file-download'
 
 
 class  OptionTable extends Component
