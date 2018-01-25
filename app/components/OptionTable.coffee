@@ -102,12 +102,14 @@ class  OptionTable extends Component
           <Button size='tiny'  color='blue' onClick={ () ->
             httpPost '/download_pdf', {}, (res) ->
               hash = JSON.parse(res).hash
-              aWindow = window.open "/download_pdf/#{hash}", 'Meow~'
-              aWindow.close()
+              aWindow = window.open "/download_pdf/#{hash}", 'Meow~', () ->
+                aWindow.close()
           }>Export PDF</Button>
           <Button size='tiny' color='teal' onClick={ () ->
             httpPost '/download_csv', {}, (res) ->
-              fileDownload res, 'test.csv'
+              hash = JSON.parse(res).hash
+              aWindow = window.open "/download_csv/#{hash}", 'Meow~', () ->
+                aWindow.close()
 
           }>Export CSV</Button>
           <Button size='tiny'  positive onClick={()-> me.props.onClick me.state } >Search !</Button>
