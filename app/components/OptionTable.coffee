@@ -38,7 +38,6 @@ class  OptionTable extends Component
           <Header size='tiny'>To</Header>
         </Grid.Column>
         <Grid.Column>
-
         {
           server = []
           _.each (_.get select, 'server'), (v,k) ->
@@ -59,8 +58,6 @@ class  OptionTable extends Component
               me.setState username: value}
               options={user} />
         }
-   
-    
         {
           command = []
           _.each (_.get select, 'command'), (v,k) ->

@@ -30,7 +30,7 @@ class  MainLayout extends Component
       document.location = "/"
   color:(color)->
     if color
-      'red'
+      '#ddf3f6'
     else
       'white'
 

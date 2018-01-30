@@ -27,7 +27,6 @@ class  LogTable extends Component
             <Table.HeaderCell >UserName</Table.HeaderCell>
             <Table.HeaderCell>ServerName</Table.HeaderCell>
             <Table.HeaderCell>Command</Table.HeaderCell>
-            <Table.HeaderCell>Method</Table.HeaderCell>
             <Table.HeaderCell>Time</Table.HeaderCell>
             <Table.HeaderCell>Details</Table.HeaderCell>
           </Table.Row>

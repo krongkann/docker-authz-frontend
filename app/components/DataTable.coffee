@@ -15,6 +15,7 @@ class  DataTable extends Component
     me = @ 
     times  =  _.get me, 'props.data.createdAt'
     time = moment(times).utcOffset("+07:00")
+    console.log "meeee===", me.props.data.message
     unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD") > 0
       dateTime = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
     else
@@ -24,7 +25,6 @@ class  DataTable extends Component
       <Table.Cell>{_.get me, 'props.data.username'}</Table.Cell>
       <Table.Cell>{_.get me, 'props.data.servername'} </Table.Cell>
       <Table.Cell>{_.get me, 'props.data.command'} </Table.Cell>
-      <Table.Cell>{_.get me, 'props.data.request_method'}</Table.Cell>
       <Table.Cell>{dateTime} </Table.Cell>
       <Table.Cell> 
         <Modal size='tiny' style={height: '50%'}  trigger={<Button color='pink' size='tiny' animated='vertical'>
@@ -50,12 +50,8 @@ class  DataTable extends Component
                 {_.get me, 'props.data.command'}
               </List.Item>
               <List.Item>
-                <Label color='olive' horizontal><Icon name='time' />Method</Label>
-                {_.get me, 'props.data.request_method'}
-              </List.Item>
-              <List.Item>
                 <Label color='green' horizontal><Icon name='time' />time</Label>
-                {_.get me, 'props.data.createdAt'}
+                {dateTime}
               </List.Item>
               <List.Item>
                 <Label color='teal' horizontal><Icon name='checkmark box' />Allow</Label>
