@@ -22,7 +22,14 @@ class  OptionTable extends Component
   componentWillMount: ->
     me = @
 
-    
+  httpPost = (theUrl, filters, callback) ->
+    xmlHttp = new XMLHttpRequest()
+    xmlHttp.onreadystatechange = () ->
+      if xmlHttp.readyState == 4 && xmlHttp.status == 200
+        callback xmlHttp.responseText
+    xmlHttp.open "POST", theUrl, true
+    xmlHttp.setRequestHeader "Content-type", "application/json"
+    xmlHttp.send JSON.stringify { filters }
 
   render:->
     me = @
@@ -88,11 +95,22 @@ class  OptionTable extends Component
         </Grid.Column>
         
         <Grid.Row>
-          <Button size='tiny'  color='blue'>Export PDF</Button>
-          <Button size='tiny' color='teal'>Export CSV</Button>
+          <Button size='tiny'  color='blue' onClick={ () ->
+            httpPost '/download_pdf', {}, (res) ->
+              hash = JSON.parse(res).hash
+              aWindow = window.open "/download_pdf/#{hash}", 'Meow~', () ->
+                aWindow.close()
+          }>Export PDF</Button>
+          <Button size='tiny' color='teal' onClick={ () ->
+            httpPost '/download_csv', {}, (res) ->
+              hash = JSON.parse(res).hash
+              aWindow = window.open "/download_csv/#{hash}", 'Meow~', () ->
+                aWindow.close()
+
+          }>Export CSV</Button>
           <Button size='tiny'  positive onClick={()-> me.props.onClick me.state } >Search !</Button>
           <Button size='tiny'  color='olive' 
-              onClick={()-> 
+              onClick={()->
                 me.setState 
                   servername: []
                   command: []

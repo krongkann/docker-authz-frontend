@@ -70,6 +70,10 @@ config =
         target: 'http://aboss-docker-authz-app'
       '/login':
         target: 'http://aboss-docker-authz-app'
+      '/download_csv':
+        target: 'http://aboss-docker-authz-app'
+      '/download_pdf':
+        target: 'http://aboss-docker-authz-app'
       '/logout':
         target: 'http://aboss-docker-authz-app'
 
