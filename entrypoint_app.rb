@@ -11,7 +11,7 @@ end
 if __FILE__ == $0
   main 
   main_exec {
-    # "supervisord -c /supervisord.conf"
-    "npm start"
+    "supervisord -c /supervisord.conf"
+    # "npm start"
   }
 end

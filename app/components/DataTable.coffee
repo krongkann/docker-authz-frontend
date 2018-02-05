@@ -15,7 +15,6 @@ class  DataTable extends Component
     me = @ 
     times  =  _.get me, 'props.data.createdAt'
     time = moment(times).utcOffset("+07:00")
-    console.log "meeee===", me.props.data.message
     unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD") > 0
       dateTime = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
     else
