@@ -6,7 +6,6 @@ DEFAULT_STATE = { servernames: ['gg', 'hh'], commands: { puppy: true }}
 
 export TYPES = defineAction('PERMISSSION',
   ['SET', 'SELECT_USERNAME', 'SELECT_SERVERNAME', 'CHANGE'])
-
 export actions =
   fetch: (params) ->
     (dispatch) ->
@@ -65,8 +64,8 @@ export actions =
     me = @
     (dispatch) ->
       mutation = """
-        mutation($username: String, $servername: String, $command: String, $allow: Boolean){
-          updateUsercommand(username: $username , servername: $servername, allow: $allow, command: $command)
+        mutation($username: String, $servername: String, $command: String, $allow: Boolean, $userlogin: String ){
+          updateUsercommand(username: $username , servername: $servername, allow: $allow, command: $command, userlogin: $userlogin)
         }
       """
       result = await client.request mutation, params
@@ -76,8 +75,8 @@ export actions =
     me = @
     (dispatch) ->
       mutation = """
-        mutation($username: String, $servername: String){
-          setAllowAll(username: $username , servername: $servername, allow: true) {
+        mutation($username: String, $servername: String, $userlogin: String){
+          setAllowAll(username: $username , servername: $servername, allow: true, userlogin: $userlogin) {
             username
             servername
             allow
@@ -91,8 +90,8 @@ export actions =
     me = @
     (dispatch) ->
       mutation = """
-        mutation($username: String, $servername: String){
-          setAllowAll(username: $username , servername: $servername, allow: false) {
+        mutation($username: String, $servername: String, $userlogin: String){
+          setAllowAll(username: $username , servername: $servername, allow: false, userlogin: $userlogin) {
             username
             servername
             allow

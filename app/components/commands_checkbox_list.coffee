@@ -6,6 +6,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import PermissionButtonsPanel from '/app/components/permission_buttons_panel'
 import { actions } from '/app/ducks/permission'
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { actions as loginActions }      from '/app/ducks/login'
 
 class CommandsCheckboxList extends Component
 
@@ -44,6 +45,7 @@ class CommandsCheckboxList extends Component
                         command: command
                         username: me.props.selectedUsername
                         servername: me.props.selectedServername
+                        userlogin:  me.props.userlogin
                     onCancel: () ->
                   
               }
@@ -60,9 +62,10 @@ mapDispatchToProps = (dispatch) ->
   actions.fetch() dispatch
   onClick: (params) ->
     actions.changePermission(params) dispatch
-mapStateToProps = ({ permission }) ->
+mapStateToProps = ({ permission, login }) ->
   return
     data: permission.commands
+    userlogin: _.get login, 'success.username'
     selectedUsername: permission.selectedUsername
     selectedServername: permission.selectedServername
 export default connect(mapStateToProps, mapDispatchToProps) CommandsCheckboxList

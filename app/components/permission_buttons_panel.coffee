@@ -4,6 +4,7 @@ import { actions } from '/app/ducks/permission'
 import { Button } from 'react-bootstrap'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { actions as loginActions }      from '/app/ducks/login'
 
 class PermissionButtonsPanel extends Component
   buttonStyle =
@@ -38,7 +39,7 @@ class PermissionButtonsPanel extends Component
               cancelLabel: 'No'
               onConfirm: () ->
                 if me.props.onAllowAllClick
-                  me.props.onAllowAllClick me.props.selectedUsername, me.props.selectedServername
+                  me.props.onAllowAllClick me.props.selectedUsername, me.props.selectedServername, me.props.userlogin
           } style={_.assign {}, buttonStyle, { background: '#0A0' }}>Allow All</Button>
         <Button onClick={ () ->
           if me.props.data
@@ -61,7 +62,7 @@ class PermissionButtonsPanel extends Component
               cancelLabel: 'No'
               onConfirm: () ->
                 if me.props.onDenyAllClick
-                  me.props.onDenyAllClick me.props.selectedUsername, me.props.selectedServername
+                  me.props.onDenyAllClick me.props.selectedUsername, me.props.selectedServername, me.props.userlogin
           } style={ _.assign {}, buttonStyle, { background: '#A00' } }>Deny All</Button>
       </div>
     </h4>
@@ -71,19 +72,24 @@ mapDispatchToProps = (dispatch) ->
       servername: selectedServername
       username: selectedUsername
     ) dispatch
-  onAllowAllClick: (selectedUsername, selectedServername) ->
+  onAllowAllClick: (selectedUsername, selectedServername, userlogin) ->
     actions.allowAll(
       servername: selectedServername
       username: selectedUsername
+      userlogin: userlogin
+
     ) dispatch
-  onDenyAllClick: (selectedUsername, selectedServername) ->
+  onDenyAllClick: (selectedUsername, selectedServername, userlogin) ->
     actions.denyAll(
       servername: selectedServername
       username: selectedUsername
+      userlogin: userlogin
+      
     ) dispatch
-mapStateToProps = ({permission}) -> 
+mapStateToProps = ({permission,login}) -> 
   return
     data: permission.commands
+    userlogin: _.get login, 'success.username'
     selectedUsername: permission.selectedUsername
     selectedServername: permission.selectedServername
 export default connect(mapStateToProps, mapDispatchToProps) PermissionButtonsPanel

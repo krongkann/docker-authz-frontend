@@ -8,7 +8,6 @@ export TYPES = defineAction('LOGOUT', ['LOGOUTING', 'SUCCESS', 'FAIL'])
 export actions = 
   doLogout: ()=>
     (dispatch) =>
-
       axios.defaults.baseURL =  '/logout'
       try 
         dispatch 

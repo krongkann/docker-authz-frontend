@@ -4,7 +4,6 @@
   "description": "aboss-docker-authz-frontend",
   "main": "index.coffee",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm-run-all --parallel start-dev-api start-dev-ui",
     "storybook": "start-storybook -p 7007 -h 0.0.0.0",
     "build-storybook": "build-storybook",

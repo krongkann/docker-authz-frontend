@@ -15,6 +15,9 @@ class  DataTable extends Component
     me = @ 
     times  =  _.get me, 'props.data.createdAt'
     time = moment(times).utcOffset("+07:00")
+    activity = _.get me, 'props.data.activity'
+    if activity is 'true' or activity is 'false' or activity is 'null'
+      activity = "--"
     unless (parseInt (moment().utcOffset '+07:00').format "DD") - parseInt(time.format "DD") > 0
       dateTime = prettyMs(new Date - time, { compact: true, verbose: true }) + ' ago'
     else
@@ -58,7 +61,7 @@ class  DataTable extends Component
               </List.Item>
               <List.Item>
                 <Label color='blue' horizontal><Icon name='user circle' />Admin</Label>
-                {(_.get me, 'props.data.activity')}
+                {activity}
               </List.Item>
             </List>
               
